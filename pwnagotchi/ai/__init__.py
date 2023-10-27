@@ -24,6 +24,15 @@ def load(config, agent, epoch, from_disk=True):
             from stable_baselines3 import A2C
             logging.debug("[ai] A2C imported in %.2fs" % (time.time() - start))
 
+            # remove ai.params that are invalid for SB3 A2C, but used in old SB
+            try:
+                for key in [ 'alpha', 'epsilon', 'lr_schedule' ]:
+                    if key in config['params']:
+                        logging.info("Removing ai parameter %s" % key);
+                        del config['params'][key]
+            except Exception as err:
+                logging.warn(repr(err))
+
             start = time.time()
             from stable_baselines3.a2c import MlpPolicy
             logging.debug("[ai] MlpPolicy imported in %.2fs" % (time.time() - start))
