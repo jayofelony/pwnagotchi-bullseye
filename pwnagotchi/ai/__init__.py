@@ -28,7 +28,7 @@ def load(config, agent, epoch, from_disk=True):
             try:
                 for key in [ 'alpha', 'epsilon', 'lr_schedule' ]:
                     if key in config['params']:
-                        logging.info("Removing ai parameter %s" % key);
+                        logging.info("Removing legacy ai parameter %s" % key);
                         del config['params'][key]
             except Exception as err:
                 logging.warn(repr(err))
@@ -45,19 +45,22 @@ def load(config, agent, epoch, from_disk=True):
         except Exception as e:
             logging.debug("[ai] stable_baselines3 not accessible. Trying stable_baselines")
 
-            from stable_baselines import A2C
-            logging.debug("[ai] A2C imported in %.2fs" % (time.time() - start))
-            SB_BACKEND = "stable_baselines"
+            try:
+                from stable_baselines import A2C
+                logging.debug("[ai] A2C imported in %.2fs" % (time.time() - start))
+                SB_BACKEND = "stable_baselines"
 
-            start = time.time()
-            from stable_baselines.common.policies import MlpLstmPolicy
-            logging.debug("[ai] MlpLstmPolicy imported in %.2fs" % (time.time() - start))
-            SB_A2C_POLICY = MlpLstmPolicy
+                start = time.time()
+                from stable_baselines.common.policies import MlpLstmPolicy
+                logging.debug("[ai] MlpLstmPolicy imported in %.2fs" % (time.time() - start))
+                SB_A2C_POLICY = MlpLstmPolicy
 
-            start = time.time()
-            from stable_baselines.common.vec_env import DummyVecEnv
-            logging.debug("[ai] DummyVecEnv imported in %.2fs" % (time.time() - start))
-
+                start = time.time()
+                from stable_baselines.common.vec_env import DummyVecEnv
+                logging.debug("[ai] DummyVecEnv imported in %.2fs" % (time.time() - start))
+            except Exception as e:
+                logging.debug("[ai] failed to load AI. %s\n Remaining in AUTO" % repr(e))
+                return False
 
         start = time.time()
         import pwnagotchi.ai.gym as wrappers
