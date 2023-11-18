@@ -66,7 +66,7 @@ class Text(Widget):
                         if self.pixels[x,y][3] < 255:    # check alpha
                             self.pixels[x,y] = (255, 255, 255, 255)
                 if self.color == 255:
-                    self._image = ImageOps.colorize(self.image.convert('L'), black = "black", white = "yellow")
+                    self._image = ImageOps.colorize(self.image.convert('L'), black = "white", white = "black")
                 else:
                     self._image = self.image
                 self.image = self._image.convert('1')
