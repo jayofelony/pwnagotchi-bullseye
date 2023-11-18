@@ -3,16 +3,15 @@
 # This file is distributed under the same license as the pwnagotchi package.
 # FIRST AUTHOR czechball@users.noreply.github.com, 2020.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-14 07:50+0100\n"
+"POT-Creation-Date: 2023-11-16 21:51+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Czechball <czechball@users.noreply.github.com>\n"
 "Language-Team: pwnagotchi <33197631+dadav@users.noreply.github.com>\n"
-"Language: cs\n"
+"Language: Czech\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -206,12 +205,15 @@ msgid "Uploading data to {to} ..."
 msgstr ""
 
 #, python-brace-format
+msgid "Downloading from {name} ..."
+msgstr ""
+
+#, python-brace-format
 msgid "Kicked {num} stations\n"
 msgstr "Vykopnuto {num} klientů\n"
 
-#, fuzzy
 msgid "Made >999 new friends\n"
-msgstr "Mám {num} nových kamarádů\n"
+msgstr "Mám >999 nových kamarádů\n"
 
 #, python-brace-format
 msgid "Made {num} new friends\n"

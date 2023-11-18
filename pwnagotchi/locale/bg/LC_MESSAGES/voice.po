@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-14 07:50+0100\n"
+"POT-Creation-Date: 2023-11-16 21:51+0100\n"
 "PO-Revision-Date: 2019-10-23 20:56+0200\n"
 "Last-Translator: Georgi Koemdzhiev <https://github.com/georgikoemdzhiev>\n"
 "Language-Team: \n"
@@ -69,9 +69,8 @@ msgstr "Много съм тъжен ..."
 msgid "I'm sad"
 msgstr "Тъжен съм"
 
-#, fuzzy
 msgid "Leave me alone ..."
-msgstr "Чувствам се толкова самотен ..."
+msgstr "Остави ме на мира ..."
 
 msgid "I'm mad at you!"
 msgstr ""
@@ -206,12 +205,16 @@ msgid "Uploading data to {to} ..."
 msgstr ""
 
 #, python-brace-format
+msgid "Downloading from {name} ..."
+msgstr ""
+
+#, python-brace-format
 msgid "Kicked {num} stations\n"
 msgstr "Отхвърлих {num} станции\n"
 
-#, fuzzy
+#
 msgid "Made >999 new friends\n"
-msgstr "Направих {num} нови приятели\n"
+msgstr "Направих >999 нови приятели\n"
 
 #, python-brace-format
 msgid "Made {num} new friends\n"

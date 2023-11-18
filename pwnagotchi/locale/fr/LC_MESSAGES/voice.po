@@ -7,12 +7,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-14 07:51+0100\n"
+"POT-Creation-Date: 2023-11-16 21:51+0100\n"
 "PO-Revision-Date: 2019-10-03 10:34+0200\n"
 "Last-Translator: quantumsheep <7271496+quantumsheep@users.noreply.github."
 "com>\n"
 "Language-Team: pwnagotchi <33197631+dadav@users.noreply.github.com>\n"
-"Language: french\n"
+"Language: French\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -70,7 +70,6 @@ msgstr "Je suis très triste..."
 msgid "I'm sad"
 msgstr "Je suis triste"
 
-#, fuzzy
 msgid "Leave me alone ..."
 msgstr "Lache moi..."
 
@@ -207,12 +206,15 @@ msgid "Uploading data to {to} ..."
 msgstr ""
 
 #, python-brace-format
+msgid "Downloading from {name} ..."
+msgstr "Je fais la sieste pendant {name}..."
+
+#, python-brace-format
 msgid "Kicked {num} stations\n"
 msgstr "{num} stations kick\n"
 
-#, fuzzy
 msgid "Made >999 new friends\n"
-msgstr "A fait {num} nouve(l/aux) ami(s)\n"
+msgstr "A fait >999 nouve(l/aux) ami(s)\n"
 
 #, python-brace-format
 msgid "Made {num} new friends\n"

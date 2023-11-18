@@ -1,13 +1,17 @@
 # This is not working quite yet
 # https://github.com/mkaczanowski/packer-builder-arm/pull/172
-#packer {
-#  required_plugins {
-#    arm = {
-#      version = ">= 1.0.0"
-#      source  = "github.com/cdecoux/builder-arm"
-#    }
-#  }
-#}
+packer {
+  required_plugins {
+    #arm = {
+    #  version = "1.0.0"
+    #  source  = "github.com/cdecoux/builder-arm"
+    #}
+    ansible = {
+      source  = "github.com/hashicorp/ansible"
+      version = "~> 1"
+    }
+  }
+}
 
 variable "pwn_hostname" {
   type = string
@@ -76,8 +80,8 @@ source "arm" "rpi32-pwnagotchi" {
   }
 }
 source "arm" "opi-pwnagotchi" {
-  file_checksum_url             = "../../images/pwnagotchi-orangepi-raspios.img.xz.sha256"
-  file_urls                     = ["../../images/pwnagotchi-orangepi-raspios.img.xz"]
+  file_checksum_url             = "https://github.com/jayofelony/orangepi/releases/download/v1.0/orangepi-raspios.img.xz.sha256"
+  file_urls                     = ["https://github.com/jayofelony/orangepi/releases/download/v1.0/orangepi-raspios.img.xz"]
   file_checksum_type            = "sha256"
   file_target_extension         = "xz"
   file_unarchive_cmd            = ["unxz", "$ARCHIVE_PATH"]

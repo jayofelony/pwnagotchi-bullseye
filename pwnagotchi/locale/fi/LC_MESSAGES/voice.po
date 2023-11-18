@@ -3,16 +3,16 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <121556603+spd-wd@users.noreply.github.com>, 2023.
 #
-#, fuzzy
+
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-13 23:26+0100\n"
+"POT-Creation-Date: 2023-11-16 21:51+0100\n"
 "PO-Revision-Date: 2023-02-11 16:25+0200\n"
 "Last-Translator: Speed Weed <121556603+spd-wd@users.noreply.github.com>\n"
 "Language-Team: pwnagotchi <121556603+spd-wd@users.noreply.github.com>\n"
-"Language: fi\n"
+"Language: Finnish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -206,12 +206,15 @@ msgid "Uploading data to {to} ..."
 msgstr "Lähetetään dataa kohteeseen {to}..."
 
 #, python-brace-format
+msgid "Downloading from {name} ..."
+msgstr ""
+
+#, python-brace-format
 msgid "Kicked {num} stations\n"
 msgstr "Potkittiin {num} asemaa\n"
 
-#, fuzzy
 msgid "Made >999 new friends\n"
-msgstr "Saatiin {num} uutta kaveria\n"
+msgstr "Saatiin >999 uutta kaveria\n"
 
 #, python-brace-format
 msgid "Made {num} new friends\n"

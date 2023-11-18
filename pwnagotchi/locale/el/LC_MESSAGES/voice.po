@@ -8,11 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-14 07:51+0100\n"
+"POT-Creation-Date: 2023-11-16 21:51+0100\n"
 "PO-Revision-Date: 2019-10-03 08:00+0000\n"
 "Last-Translator: Periklis Fregkos <fregkos@gmail.com>\n"
 "Language-Team: pwnagotchi <33197631+dadav@users.noreply.github.com>\n"
-"Language: el\n"
+"Language: Greek\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -70,7 +70,6 @@ msgstr "Είμαι πολύ λυπημένο ..."
 msgid "I'm sad"
 msgstr "Είμαι λυπημένο"
 
-#, fuzzy
 msgid "Leave me alone ..."
 msgstr "Νιώθω μοναχός μου ..."
 
@@ -92,9 +91,9 @@ msgstr "Περνάω τέλεια!"
 msgid "My crime is that of curiosity ..."
 msgstr "Η περιέργεια είναιτο μόνο έγκλημά μου ..."
 
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Hello {name}! Nice to meet you."
-msgstr "Γειά {name}!Χάρηκα για τη γνωριμία. {name}"
+msgstr "Γειά {name}!Χάρηκα για τη γνωριμία."
 
 #, python-brace-format
 msgid "Yo {name}! Sup?"
@@ -104,9 +103,9 @@ msgstr ""
 msgid "Hey {name} how are you doing?"
 msgstr ""
 
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Unit {name} is nearby!"
-msgstr "Η μονάδα {name} είναι κοντά! {name}"
+msgstr "Η μονάδα {name} είναι κοντά!"
 
 #, python-brace-format
 msgid "Uhm ... goodbye {name}"
@@ -195,9 +194,9 @@ msgstr "Μπανάρω την {mac}!"
 msgid "Cool, we got {num} new handshake{plural}!"
 msgstr "Τέλεια δικέ μου, πήραμε {num} νέες χειραψίες!"
 
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "You have {count} new message{plural}!"
-msgstr "Τέλεια δικέ μου, πήραμε {num} νέες χειραψίες!"
+msgstr "Τέλεια δικέ μου, πήραμε {count} νέες χειραψίες{plural}!"
 
 msgid "Oops, something went wrong ... Rebooting ..."
 msgstr "Ουπς, κάτιπήγε λάθος ... Επανεκκινούμαι ..."
@@ -207,12 +206,15 @@ msgid "Uploading data to {to} ..."
 msgstr ""
 
 #, python-brace-format
+msgid "Downloading from {name} ..."
+msgstr ""
+
+#, python-brace-format
 msgid "Kicked {num} stations\n"
 msgstr "Έριξα {num} σταθμούς\n"
 
-#, fuzzy
 msgid "Made >999 new friends\n"
-msgstr "Έκανα {num} νέους φίλους\n"
+msgstr "Έκανα >999 νέους φίλους\n"
 
 #, python-brace-format
 msgid "Made {num} new friends\n"

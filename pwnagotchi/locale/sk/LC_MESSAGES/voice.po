@@ -8,11 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-14 07:52+0100\n"
+"POT-Creation-Date: 2023-11-16 21:51+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Milan Kyselica <mil.kyselica@gmail.com>\n"
 "Language-Team: SK\n"
-"Language: sk\n"
+"Language: Slovak\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -70,7 +70,6 @@ msgstr "Som veľmi smutný ..."
 msgid "I'm sad"
 msgstr "Som smutný"
 
-#, fuzzy
 msgid "Leave me alone ..."
 msgstr "Cítim sa tak sám ..."
 
@@ -207,12 +206,15 @@ msgid "Uploading data to {to} ..."
 msgstr ""
 
 #, python-brace-format
+msgid "Downloading from {name} ..."
+msgstr ""
+
+#, python-brace-format
 msgid "Kicked {num} stations\n"
 msgstr "Kicknutá/ých {num} stanica/íc\n"
 
-#, fuzzy
 msgid "Made >999 new friends\n"
-msgstr "Získaní {num} noví kamaráti\n"
+msgstr "Získaní >999 noví kamaráti\n"
 
 #, python-brace-format
 msgid "Made {num} new friends\n"

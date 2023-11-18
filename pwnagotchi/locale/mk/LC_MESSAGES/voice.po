@@ -8,11 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-14 07:52+0100\n"
+"POT-Creation-Date: 2023-11-16 21:51+0100\n"
 "PO-Revision-Date: 2019-09-30 23:53+0200\n"
 "Last-Translator: kovach <2214005+kovachwt@users.noreply.github.com>\n"
 "Language-Team: \n"
-"Language: mk\n"
+"Language: Macedonian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -70,7 +70,6 @@ msgstr "Многу тажно ..."
 msgid "I'm sad"
 msgstr "Тажно"
 
-#, fuzzy
 msgid "Leave me alone ..."
 msgstr "Толку сам ..."
 
@@ -92,9 +91,9 @@ msgstr "Јухуу забавноо ее!"
 msgid "My crime is that of curiosity ..."
 msgstr "Виновен сум само заљубопитност ..."
 
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Hello {name}! Nice to meet you."
-msgstr "Здраво{name}! Мило ми е. {name}"
+msgstr "Здраво{name}! Мило ми е."
 
 #, python-brace-format
 msgid "Yo {name}! Sup?"
@@ -104,9 +103,9 @@ msgstr ""
 msgid "Hey {name} how are you doing?"
 msgstr ""
 
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Unit {name} is nearby!"
-msgstr "Опаа {name} е во близина! {name}"
+msgstr "Опаа {name} е во близина!"
 
 #, python-brace-format
 msgid "Uhm ... goodbye {name}"
@@ -156,9 +155,8 @@ msgstr "Дремммм ({secs}с)"
 msgid "Good night."
 msgstr ""
 
-#, fuzzy
 msgid "Zzz"
-msgstr "Дреммм"
+msgstr ""
 
 #, python-brace-format
 msgid "Waiting for {secs}s ..."
@@ -196,9 +194,9 @@ msgstr "Кикбан {mac}!"
 msgid "Cool, we got {num} new handshake{plural}!"
 msgstr "Кул, фативме {num} нови ракувања!"
 
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "You have {count} new message{plural}!"
-msgstr "Кул, фативме {num} нови ракувања!"
+msgstr "Кул, фативме {count} нови ракувања!"
 
 msgid "Oops, something went wrong ... Rebooting ..."
 msgstr "Упс, нешто не еко што треба ... Рестартирам ..."
@@ -208,12 +206,15 @@ msgid "Uploading data to {to} ..."
 msgstr ""
 
 #, python-brace-format
+msgid "Downloading from {name} ..."
+msgstr ""
+
+#, python-brace-format
 msgid "Kicked {num} stations\n"
 msgstr "Избацив {num} станици\n"
 
-#, fuzzy
 msgid "Made >999 new friends\n"
-msgstr "{num} нови другарчиња\n"
+msgstr ">999 нови другарчиња\n"
 
 #, python-brace-format
 msgid "Made {num} new friends\n"

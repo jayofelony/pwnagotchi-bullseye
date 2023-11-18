@@ -7,10 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-14 07:52+0100\n"
+"POT-Creation-Date: 2023-11-16 21:51+0100\n"
 "PO-Revision-Date: 2019-10-02 17:20+0000\n"
 "Language-Team: pwnagotchi <33197631+dadav@users.noreply.github.com>\n"
-"Language: italian\n"
+"Language: Italian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -68,7 +68,6 @@ msgstr "Sono molto triste..."
 msgid "I'm sad"
 msgstr "Sono triste"
 
-#, fuzzy
 msgid "Leave me alone ..."
 msgstr "Mi sento così solo..."
 
@@ -90,9 +89,9 @@ msgstr "Mi sto divertendo tantissimo!"
 msgid "My crime is that of curiosity ..."
 msgstr ""
 
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Hello {name}! Nice to meet you."
-msgstr "Ciao {name}! E' un piacere. {name}"
+msgstr "Ciao {name}! E' un piacere."
 
 #, python-brace-format
 msgid "Yo {name}! Sup?"
@@ -102,9 +101,9 @@ msgstr ""
 msgid "Hey {name} how are you doing?"
 msgstr ""
 
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Unit {name} is nearby!"
-msgstr "L'Unità {name} è vicina! {name}"
+msgstr "L'Unità {name} è vicina!"
 
 #, python-brace-format
 msgid "Uhm ... goodbye {name}"
@@ -193,9 +192,9 @@ msgstr "Sto prendendo a calci {mac}!"
 msgid "Cool, we got {num} new handshake{plural}!"
 msgstr "Bene, abbiamo {num} handshake{plural} in più!"
 
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "You have {count} new message{plural}!"
-msgstr "Bene, abbiamo {num} handshake{plural} in più!"
+msgstr "Bene, abbiamo {count} handshake{plural} in più!"
 
 msgid "Oops, something went wrong ... Rebooting ..."
 msgstr "Ops, qualcosa è andato storto ... Riavvio ..."
@@ -205,12 +204,15 @@ msgid "Uploading data to {to} ..."
 msgstr ""
 
 #, python-brace-format
+msgid "Downloading from {name} ..."
+msgstr ""
+
+#, python-brace-format
 msgid "Kicked {num} stations\n"
 msgstr "{num} stazioni pestate\n"
 
-#, fuzzy
 msgid "Made >999 new friends\n"
-msgstr "{num} nuovi amici\n"
+msgstr ">999 nuovi amici\n"
 
 #, python-brace-format
 msgid "Made {num} new friends\n"
