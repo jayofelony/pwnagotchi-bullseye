@@ -27,7 +27,7 @@ msgid "New day, new hunt, new pwns!"
 msgstr "Novo dia, nova caçada, novos pwns!"
 
 msgid "Hack the Planet!"
-msgstr "Hacka o Planeta!"
+msgstr "Hackeie o Planeta!"
 
 msgid "AI ready."
 msgstr "IA pronta."
@@ -36,18 +36,18 @@ msgid "The neural network is ready."
 msgstr "A rede neural está pronta."
 
 msgid "Generating keys, do not turn off ..."
-msgstr ""
+msgstr "Gerando chaves, nao disligue o dispositivo..."
 
 #, python-brace-format
 msgid "Hey, channel {channel} is free! Your AP will say thanks."
-msgstr "Hey, o canal {channel} está livre! O teu AP irá agradecer."
+msgstr "Ei, o canal {channel} está livre! O teu Ponto de Acesso irá agradecer."
 
 msgid "Reading last session logs ..."
-msgstr ""
+msgstr "Lendo ultimos logs da sessão"
 
 #, python-brace-format
 msgid "Read {lines_so_far} log lines so far ..."
-msgstr ""
+msgstr "Lido {lines_so_far} linhas de log ate agora ..."
 
 msgid "I'm bored ..."
 msgstr "Estou aborrecido ..."
@@ -74,7 +74,7 @@ msgid "Leave me alone ..."
 msgstr "Sinto-me tão só ..."
 
 msgid "I'm mad at you!"
-msgstr ""
+msgstr "Estou de mal de você"
 
 msgid "I'm living the life!"
 msgstr "Estou aproveitar a vida!"
@@ -97,11 +97,11 @@ msgstr "Olá {name}! Prazer em conhecer-te."
 
 #, python-brace-format
 msgid "Yo {name}! Sup?"
-msgstr ""
+msgstr "Ei {name}! Tudo certo?"
 
 #, python-brace-format
 msgid "Hey {name} how are you doing?"
-msgstr ""
+msgstr "Ei {name} como vai você?"
 
 #, python-brace-format
 msgid "Unit {name} is nearby!"
@@ -127,10 +127,10 @@ msgid "Missed!"
 msgstr "Perdido!"
 
 msgid "Good friends are a blessing!"
-msgstr ""
+msgstr "Bons amigos são uma benção"
 
 msgid "I love my friends!"
-msgstr ""
+msgstr "Eu amo meus amigos!"
 
 msgid "Nobody wants to play with me ..."
 msgstr "Ninguém quer brincar comigo ..."
@@ -176,7 +176,7 @@ msgstr "A associar a {what}"
 
 #, python-brace-format
 msgid "Yo {what}!"
-msgstr "Yo {what}!"
+msgstr "Ei {what}!"
 
 #, python-brace-format
 msgid "Just decided that {mac} needs no WiFi!"
@@ -196,18 +196,18 @@ msgstr "Porreiro, temos {num} novo handshake{plural}!"
 
 #, python-brace-format
 msgid "You have {count} new message{plural}!"
-msgstr ""
+msgstr "Você tem {count} nova{plural} message{plural}!"
 
 msgid "Oops, something went wrong ... Rebooting ..."
 msgstr "Ups, algo correu mal ... A reiniciar ..."
 
 #, python-brace-format
 msgid "Uploading data to {to} ..."
-msgstr ""
+msgstr "Carregando dados para {to} ..."
 
 #, python-brace-format
 msgid "Downloading from {name} ..."
-msgstr ""
+msgstr "Baixando de {name} ..."
 
 #, python-brace-format
 msgid "Kicked {num} stations\n"
