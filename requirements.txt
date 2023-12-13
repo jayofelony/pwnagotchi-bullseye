@@ -1,24 +1,34 @@
-pycryptodome==3.9.4
-requests==2.21.0
-PyYAML==5.3.1
-scapy==2.4.3
-gym==0.14.0
-scipy==1.3.1
-stable-baselines==2.7.0
-tensorflow==1.13.1
-tensorflow-estimator==1.14.0
-tweepy==3.7.0
-file-read-backwards==2.0.0
-numpy==1.20.2
-inky==1.2.0
-smbus2==0.3.0
-Pillow==5.4.1
-spidev==3.4
-gast==0.2.2
-flask==1.0.2
-flask-cors==3.0.7
-flask-wtf==0.14.3
-dbus-python==1.2.12
-toml==0.10.0
-python-dateutil==2.8.1
-websockets==8.1
+gym
+shimmy; platform_machine!="armv6l"
+pycryptodome
+requests
+PyYAML
+scapy
+tweepy
+file-read-backwards
+inky
+smbus2
+Pillow
+spidev
+gast
+flask
+flask-cors
+flask-wtf
+dbus-python
+toml
+python-dateutil
+websockets
+torch==2.0.1; platform_machine=="aarch64"
+torch>=2.0.1; platform_machine!="aarch64"
+
+torchvision==0.15.2; platform_machine=="aarch64"
+torchvision>=0.15.2; platform_machine!="aarch64"
+
+stable_baselines3==1.8.0; platform_machine=="armv6l"
+stable_baselines3; platform_machine!="armv6l"
+
+RPi.GPIO; platform_release!="6.1.31-sun50iw9"
+OPi.GPIO; platform_release=="6.1.31-sun50iw9"
+
+rpi_hardware_pwm; platform_release!="6.1.31-sun50iw9"
+pydrive2

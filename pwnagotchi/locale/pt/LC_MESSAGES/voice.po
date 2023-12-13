@@ -3,18 +3,18 @@
 # This file is distributed under the same license as the PACKAGE package.
 # David Sopas <email@aleatorio.xyz>, 2019.
 #
-#, fuzzy
+
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-09 17:42+0200\n"
+"POT-Creation-Date: 2023-11-16 21:51+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: David Sopas <email@aleatorio.xyz>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: Portuguese\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 msgid "ZzzzZZzzzzZzzz"
@@ -35,9 +35,19 @@ msgstr "IA pronta."
 msgid "The neural network is ready."
 msgstr "A rede neural está pronta."
 
+msgid "Generating keys, do not turn off ..."
+msgstr ""
+
 #, python-brace-format
 msgid "Hey, channel {channel} is free! Your AP will say thanks."
 msgstr "Hey, o canal {channel} está livre! O teu AP irá agradecer."
+
+msgid "Reading last session logs ..."
+msgstr ""
+
+#, python-brace-format
+msgid "Read {lines_so_far} log lines so far ..."
+msgstr ""
 
 msgid "I'm bored ..."
 msgstr "Estou aborrecido ..."
@@ -60,6 +70,12 @@ msgstr "Estou muito triste ..."
 msgid "I'm sad"
 msgstr "Estou triste"
 
+msgid "Leave me alone ..."
+msgstr "Sinto-me tão só ..."
+
+msgid "I'm mad at you!"
+msgstr ""
+
 msgid "I'm living the life!"
 msgstr "Estou aproveitar a vida!"
 
@@ -76,12 +92,20 @@ msgid "My crime is that of curiosity ..."
 msgstr "O meu crime é ser curioso ..."
 
 #, python-brace-format
-msgid "Hello {name}! Nice to meet you. {name}"
-msgstr "Olá {name}! Prazer em conhecer-te. {name}"
+msgid "Hello {name}! Nice to meet you."
+msgstr "Olá {name}! Prazer em conhecer-te."
 
 #, python-brace-format
-msgid "Unit {name} is nearby! {name}"
-msgstr "A unidade {name} está perto! {name}"
+msgid "Yo {name}! Sup?"
+msgstr ""
+
+#, python-brace-format
+msgid "Hey {name} how are you doing?"
+msgstr ""
+
+#, python-brace-format
+msgid "Unit {name} is nearby!"
+msgstr "A unidade {name} está perto!"
 
 #, python-brace-format
 msgid "Uhm ... goodbye {name}"
@@ -101,6 +125,12 @@ msgstr "{name} perdido!"
 
 msgid "Missed!"
 msgstr "Perdido!"
+
+msgid "Good friends are a blessing!"
+msgstr ""
+
+msgid "I love my friends!"
+msgstr ""
 
 msgid "Nobody wants to play with me ..."
 msgstr "Ninguém quer brincar comigo ..."
@@ -164,12 +194,27 @@ msgstr "A chutar {mac}!"
 msgid "Cool, we got {num} new handshake{plural}!"
 msgstr "Porreiro, temos {num} novo handshake{plural}!"
 
+#, python-brace-format
+msgid "You have {count} new message{plural}!"
+msgstr ""
+
 msgid "Oops, something went wrong ... Rebooting ..."
 msgstr "Ups, algo correu mal ... A reiniciar ..."
 
 #, python-brace-format
+msgid "Uploading data to {to} ..."
+msgstr ""
+
+#, python-brace-format
+msgid "Downloading from {name} ..."
+msgstr ""
+
+#, python-brace-format
 msgid "Kicked {num} stations\n"
 msgstr "Chutei {num} estações\n"
+
+msgid "Made >999 new friends\n"
+msgstr "Fiz >999 novos amigos\n"
 
 #, python-brace-format
 msgid "Made {num} new friends\n"
@@ -191,9 +236,10 @@ msgid ""
 "I've been pwning for {duration} and kicked {deauthed} clients! I've also met "
 "{associated} new friends and ate {handshakes} handshakes! #pwnagotchi "
 "#pwnlog #pwnlife #hacktheplanet #skynet"
-msgstr "Tenho estado a pwnar durante {duration} e chutei {deauthed} clientes! Também conheci "
-"{associated} novos amigos e comi {handshakes} handshakes! #pwnagotchu "
-"#pwnlog #pwnlife #hacktheplanet #skynet"
+msgstr ""
+"Tenho estado a pwnar durante {duration} e chutei {deauthed} clientes! Também "
+"conheci {associated} novos amigos e comi {handshakes} handshakes! "
+"#pwnagotchu #pwnlog #pwnlife #hacktheplanet #skynet"
 
 msgid "hours"
 msgstr "horas"

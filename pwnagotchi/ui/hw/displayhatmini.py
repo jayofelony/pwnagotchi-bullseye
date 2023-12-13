@@ -41,6 +41,7 @@ class DisplayHatMini(DisplayImpl):
         self._display.display(canvas)
 
     def clear(self):
+<<<<<<< displayhatmini-base
         self._display.clear()
 
     def set_backlight(self, value):
@@ -50,3 +51,6 @@ class DisplayHatMini(DisplayImpl):
     def get_backlight(self):
         if self._display:
             self._display.get_backlight(value)
+=======
+        self._display.clear()
+>>>>>>> pwnagotchi-torch

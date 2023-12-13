@@ -1,58 +1,20 @@
-main.name = ""
+main.name = "pwnagotchi"
 main.lang = "en"
 main.confd = "/etc/pwnagotchi/conf.d/"
-main.custom_plugins = ""
 main.custom_plugin_repos = [
-  "https://github.com/evilsocket/pwnagotchi-plugins-contrib/archive/master.zip"
+    "https://github.com/jayofelony/pwnagotchi-torch-plugins/archive/master.zip",
+    "https://github.com/evilsocket/pwnagotchi-plugins-contrib/archive/master.zip",
+    "https://github.com/tisboyo/pwnagotchi-pisugar2-plugin/archive/master.zip",
+    "https://github.com/nullm0ose/pwnagotchi-plugin-pisugar3/archive/master.zip",
+    "https://github.com/Sniffleupagus/pwnagotchi_plugins/archive/master.zip",
+    "https://github.com/NeonLightning/pwny/archive/master.zip"
 ]
-main.iface = "mon0"
-main.mon_start_cmd = "/usr/bin/monstart"
-main.mon_stop_cmd = "/usr/bin/monstop"
-main.mon_max_blind_epochs = 50
-main.no_restart = false
-main.whitelist = [
-  "EXAMPLE_NETWORK",
-  "ANOTHER_EXAMPLE_NETWORK",
-  "fo:od:ba:be:fo:od",
-  "fo:od:ba"
-]
-main.filter = ""
 
-main.plugins.grid.enabled = true
-main.plugins.grid.report = false
-main.plugins.grid.exclude = [
-  "YourHomeNetworkHere"
-]
+main.custom_plugins = "/usr/local/share/pwnagotchi/custom-plugins/"
 
 main.plugins.auto-update.enabled = true
 main.plugins.auto-update.install = true
 main.plugins.auto-update.interval = 1
-
-main.plugins.net-pos.enabled = false
-main.plugins.net-pos.api_key = "test"
-
-main.plugins.gps.enabled = false
-main.plugins.gps.speed = 19200
-main.plugins.gps.device = "/dev/ttyUSB0"
-
-main.plugins.webgpsmap.enabled = false
-
-main.plugins.onlinehashcrack.enabled = false
-main.plugins.onlinehashcrack.email = ""
-main.plugins.onlinehashcrack.dashboard = ""
-main.plugins.onlinehashcrack.single_files = false
-main.plugins.onlinehashcrack.whitelist = []
-
-main.plugins.wpa-sec.enabled = false
-main.plugins.wpa-sec.api_key = ""
-main.plugins.wpa-sec.api_url = "https://wpa-sec.stanev.org"
-main.plugins.wpa-sec.download_results = false
-main.plugins.wpa-sec.whitelist = []
-
-main.plugins.wigle.enabled = false
-main.plugins.wigle.api_key = ""
-main.plugins.wigle.whitelist = []
-main.plugins.wigle.donate = true
 
 main.plugins.bt-tether.enabled = false
 
@@ -78,55 +40,93 @@ main.plugins.bt-tether.devices.ios-phone.max_tries = 0
 main.plugins.bt-tether.devices.ios-phone.share_internet = false
 main.plugins.bt-tether.devices.ios-phone.priority = 999
 
-main.plugins.memtemp.enabled = false
-main.plugins.memtemp.scale = "celsius"
-main.plugins.memtemp.orientation = "horizontal"
+main.plugins.fix_services.enabled = true
 
-main.plugins.paw-gps.enabled = false
-main.plugins.paw-gps.ip = "192.168.44.1:8080"
-
-main.plugins.ups_lite.enabled = false
-main.plugins.ups_lite.shutdown = 2
+main.plugins.gdrivesync.enabled = false
+main.plugins.gdrivesync.backupfiles = ['']
+main.plugins.gdrivesync.backup_folder = "PwnagotchiBackups"
+main.plugin.gdrivesync.interval = 1
 
 main.plugins.gpio_buttons.enabled = false
 
-main.plugins.led.enabled = true
-main.plugins.led.led = 0
-main.plugins.led.delay = 200
-main.plugins.led.patterns.loaded = "oo  oo  oo oo  oo  oo  oo"
-main.plugins.led.patterns.updating = "oo  oo  oo oo  oo  oo  oo"
-main.plugins.led.patterns.unread_inbox = "oo  oo  oo oo  oo  oo  oo"
-main.plugins.led.patterns.ready = "oo  oo  oo oo  oo  oo  oo"
-main.plugins.led.patterns.ai_ready = "oo  oo  oo oo  oo  oo  oo"
-main.plugins.led.patterns.ai_training_start = "oo  oo  oo oo  oo  oo  oo"
-main.plugins.led.patterns.ai_best_reward = "oo  oo  oo oo  oo  oo  oo"
-main.plugins.led.patterns.ai_worst_reward = "oo  oo  oo oo  oo  oo  oo"
-main.plugins.led.patterns.bored = "oo  oo  oo oo  oo  oo  oo"
-main.plugins.led.patterns.sad = "oo  oo  oo oo  oo  oo  oo"
-main.plugins.led.patterns.excited = "oo  oo  oo oo  oo  oo  oo"
-main.plugins.led.patterns.lonely = "oo  oo  oo oo  oo  oo  oo"
-main.plugins.led.patterns.rebooting = "oo  oo  oo oo  oo  oo  oo"
-main.plugins.led.patterns.wait = "oo  oo  oo oo  oo  oo  oo"
-main.plugins.led.patterns.sleep = "oo  oo  oo oo  oo  oo  oo"
-main.plugins.led.patterns.wifi_update = "oo  oo  oo oo  oo  oo  oo"
-main.plugins.led.patterns.association = "oo  oo  oo oo  oo  oo  oo"
-main.plugins.led.patterns.deauthentication = "oo  oo  oo oo  oo  oo  oo"
-main.plugins.led.patterns.handshake = "oo  oo  oo oo  oo  oo  oo"
-main.plugins.led.patterns.epoch = "oo  oo  oo oo  oo  oo  oo"
-main.plugins.led.patterns.peer_detected = "oo  oo  oo oo  oo  oo  oo"
-main.plugins.led.patterns.peer_lost = "oo  oo  oo oo  oo  oo  oo"
+main.plugins.gps.enabled = false
+main.plugins.gps.speed = 19200
+main.plugins.gps.device = "/dev/ttyUSB0" # for GPSD: "localhost:2947"
+
+main.plugins.grid.enabled = true
+main.plugins.grid.report = true
+main.plugins.grid.exclude = [
+    "YourHomeNetworkHere"
+]
 
 main.plugins.logtail.enabled = false
 main.plugins.logtail.max-lines = 10000
 
+main.plugins.memtemp.enabled = false
+main.plugins.memtemp.scale = "celsius"
+main.plugins.memtemp.orientation = "horizontal"
+
+main.plugins.net-pos.enabled = false
+main.plugins.net-pos.api_key = "test"
+
+main.plugins.onlinehashcrack.enabled = false
+main.plugins.onlinehashcrack.email = ""
+main.plugins.onlinehashcrack.dashboard = ""
+main.plugins.onlinehashcrack.single_files = false
+main.plugins.onlinehashcrack.whitelist = []
+
+main.plugins.paw-gps.enabled = false
+main.plugins.paw-gps.ip = "192.168.44.1:8080"
+
+main.plugins.pisugar2.enabled = false
+main.plugins.pisugar2.shutdown = 5
+main.plugins.pisugar2.sync_rtc_on_boot = false
+
 main.plugins.session-stats.enabled = true
 main.plugins.session-stats.save_directory = "/var/tmp/pwnagotchi/sessions/"
+
+main.plugins.ups_hat_c.enabled = false
+main.plugins.ups_hat_c.label_on = true  # show BAT label or just percentage
+main.plugins.ups_hat_c.shutdown = 5  # battery percent at which the device will turn off
+main.plugins.ups_hat_c.bat_x_coord = 140
+main.plugins.ups_hat_c.bat_y_coord = 0
+
+main.plugins.ups_lite.enabled = false
+main.plugins.ups_lite.shutdown = 2
+
+main.plugins.webcfg.enabled = true
+
+main.plugins.webgpsmap.enabled = false
+
+main.plugins.wigle.enabled = false
+main.plugins.wigle.api_key = ""
+main.plugins.wigle.whitelist = []
+main.plugins.wigle.donate = true
+
+main.plugins.wpa-sec.enabled = false
+main.plugins.wpa-sec.api_key = ""
+main.plugins.wpa-sec.api_url = "https://wpa-sec.stanev.org"
+main.plugins.wpa-sec.download_results = false
+main.plugins.wpa-sec.whitelist = []
+
+main.iface = "wlan0mon"
+main.mon_start_cmd = "/usr/bin/monstart"
+main.mon_stop_cmd = "/usr/bin/monstop"
+main.mon_max_blind_epochs = 50
+main.no_restart = false
+main.whitelist = [
+    "EXAMPLE_NETWORK",
+    "ANOTHER_EXAMPLE_NETWORK",
+    "fo:od:ba:be:fo:od",
+    "fo:od:ba"
+]
+main.filter = ""
 
 main.log.path = "/var/log/pwnagotchi.log"
 main.log.rotation.enabled = true
 main.log.rotation.size = "10M"
 
-ai.enabled = true
+ai.enabled = false
 ai.path = "/root/brain.nn"
 ai.laziness = 0.1
 ai.epochs_per_episode = 50
@@ -137,10 +137,7 @@ ai.params.vf_coef = 0.25
 ai.params.ent_coef = 0.01
 ai.params.max_grad_norm = 0.5
 ai.params.learning_rate = 0.001
-ai.params.alpha = 0.99
-ai.params.epsilon = 0.00001
 ai.params.verbose = 1
-ai.params.lr_schedule = "constant"
 
 personality.advertise = true
 personality.deauth = true
@@ -160,6 +157,8 @@ personality.excited_num_epochs = 10
 personality.bored_num_epochs = 15
 personality.sad_num_epochs = 25
 personality.bond_encounters_factor = 20000
+personality.throttle_a = 0.4
+personality.throttle_d = 0.9
 
 ui.fps = 0.0
 ui.font.name = "DejaVuSansMono" # for japanese: fonts-japanese-gothic
@@ -192,14 +191,14 @@ ui.faces.upload1 = "(1__1)"
 ui.faces.upload2 = "(0__1)"
 
 ui.web.enabled = true
-ui.web.address = "0.0.0.0"
+ui.web.address = "::" # listening on both ipv4 and ipv6 - switch to 0.0.0.0 to listen on just ipv4
 ui.web.username = "changeme"
 ui.web.password = "changeme"
 ui.web.origin = ""
 ui.web.port = 8080
 ui.web.on_frame = ""
 
-ui.display.enabled = true
+ui.display.enabled = false
 ui.display.rotation = 180
 ui.display.type = "waveshare_2"
 ui.display.color = "black"
@@ -211,18 +210,18 @@ bettercap.username = "pwnagotchi"
 bettercap.password = "pwnagotchi"
 bettercap.handshakes = "/root/handshakes"
 bettercap.silence = [
-  "ble.device.new",
-  "ble.device.lost",
-  "ble.device.disconnected",
-  "ble.device.connected",
-  "ble.device.service.discovered",
-  "ble.device.characteristic.discovered",
-  "wifi.client.new",
-  "wifi.client.lost",
-  "wifi.client.probe",
-  "wifi.ap.new",
-  "wifi.ap.lost",
-  "mod.started"
+    "ble.device.new",
+    "ble.device.lost",
+    "ble.device.disconnected",
+    "ble.device.connected",
+    "ble.device.service.discovered",
+    "ble.device.characteristic.discovered",
+    "wifi.client.new",
+    "wifi.client.lost",
+    "wifi.client.probe",
+    "wifi.ap.new",
+    "wifi.ap.lost",
+    "mod.started"
 ]
 
 fs.memory.enabled = false
