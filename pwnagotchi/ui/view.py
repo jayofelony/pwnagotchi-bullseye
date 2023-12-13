@@ -16,8 +16,8 @@ from pwnagotchi.ui.components import *
 from pwnagotchi.ui.state import State
 from pwnagotchi.voice import Voice
 
-WHITE = 0xff
-BLACK = 0x00
+WHITE = 0x00
+BLACK = 0xff
 ROOT = None
 
 
@@ -56,9 +56,8 @@ class View(object):
 
             'face': Text(value=faces.SLEEP, position=self._layout['face'], color=BLACK, font=fonts.Huge),
 
-            'friend_face': Text(value=None, position=self._layout['friend_face'], font=fonts.Bold, color=BLACK),
-            'friend_name': Text(value=None, position=self._layout['friend_name'], font=fonts.BoldSmall,
-                                color=BLACK),
+            # 'friend_face': Text(value=None, position=self._layout['friend_face'], font=fonts.Bold, color=BLACK),
+            'friend_name': Text(value=None, position=self._layout['friend_name'], font=fonts.BoldSmall, color=BLACK),
 
             'name': Text(value='%s>' % 'pwnagotchi', position=self._layout['name'], color=BLACK, font=fonts.Bold),
 
@@ -245,7 +244,7 @@ class View(object):
 
     def wait(self, secs, sleeping=True):
         was_normal = self.is_normal()
-        part = secs / 10.0
+        part = secs/10.0
 
         for step in range(0, 10):
             # if we weren't in a normal state before going
@@ -257,11 +256,13 @@ class View(object):
                     if secs > 1:
                         self.set('face', faces.SLEEP)
                         self.set('status', self._voice.on_napping(int(secs)))
+
                     else:
                         self.set('face', faces.SLEEP2)
                         self.set('status', self._voice.on_awakening())
                 else:
                     self.set('status', self._voice.on_waiting(int(secs)))
+
                     good_mood = self._agent.in_good_mood()
                     if step % 2 == 0:
                         self.set('face', faces.LOOK_R_HAPPY if good_mood else faces.LOOK_R)

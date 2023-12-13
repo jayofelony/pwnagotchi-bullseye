@@ -3,12 +3,11 @@ import logging
 import time
 import re
 
-
-
 from pwnagotchi._version import __version__
 
 _name = None
 config = None
+_cpu_stats = {}
 
 
 def set_name(new_name):
@@ -41,7 +40,7 @@ def set_name(new_name):
             fp.write(patched)
 
         os.system("hostname '%s'" % new_name)
-        pwnagotchi.reboot()
+        reboot()
 
 
 def name():
@@ -72,24 +71,28 @@ def mem_usage():
         kb_mem_used = kb_mem_total - kb_mem_free - kb_main_cached - kb_main_buffers
         return round(kb_mem_used / kb_mem_total, 1)
 
-    return 0
-
 
 def _cpu_stat():
     """
-    Returns the splitted first line of the /proc/stat file
+    Returns the split first line of the /proc/stat file
     """
     with open('/proc/stat', 'rt') as fp:
-        return list(map(int,fp.readline().split()[1:]))
+        return list(map(int, fp.readline().split()[1:]))
 
 
-def cpu_load():
+def cpu_load(tag=None):
     """
     Returns the current cpuload
     """
-    parts0 = _cpu_stat()
-    time.sleep(0.1)
+    if tag and tag in _cpu_stats.keys():
+        parts0 = _cpu_stats[tag]
+    else:
+        parts0 = _cpu_stat()
+        time.sleep(0.1)     # only need to sleep when no tag
     parts1 = _cpu_stat()
+    if tag:
+        _cpu_stats[tag] = parts1
+
     parts_diff = [p1 - p0 for (p0, p1) in zip(parts0, parts1)]
     user, nice, sys, idle, iowait, irq, softirq, steal, _guest, _guest_nice = parts_diff
     idle_sum = idle + iowait
@@ -126,7 +129,7 @@ def shutdown():
 
 def restart(mode):
     logging.warning("restarting in %s mode ...", mode)
-
+    mode = mode.upper()
     if mode == 'AUTO':
         os.system("touch /root/.pwnagotchi-auto")
     else:

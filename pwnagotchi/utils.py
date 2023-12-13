@@ -58,9 +58,8 @@ class DottedTomlEncoder(TomlEncoder):
                     if not retstr.endswith('\n\n'):
                         retstr += '\n'
                 else:
-                    retstr += (pre + qsection + " = " +
-                                str(self.dump_value(value)) + '\n')
-        return (retstr, self._dict())
+                    retstr += (pre + qsection + " = " + str(self.dump_value(value)) + '\n')
+        return retstr, self._dict()
 
 
 def parse_version(version):
@@ -75,6 +74,7 @@ def remove_whitelisted(list_of_handshakes, list_of_whitelisted_strings, valid_on
     Removes a given list of whitelisted handshakes from a path list
     """
     filtered = list()
+
     def normalize(name):
         """
         Only allow alpha/nums
@@ -96,7 +96,6 @@ def remove_whitelisted(list_of_handshakes, list_of_whitelisted_strings, valid_on
     return filtered
 
 
-
 def download_file(url, destination, chunk_size=128):
     import requests
     resp = requests.get(url)
@@ -105,6 +104,7 @@ def download_file(url, destination, chunk_size=128):
     with open(destination, 'wb') as fd:
         for chunk in resp.iter_content(chunk_size):
             fd.write(chunk)
+
 
 def unzip(file, destination, strip_dirs=0):
     os.makedirs(destination, exist_ok=True)
@@ -129,6 +129,7 @@ def merge_config(user, default):
                 user[k] = merge_config(user[k], v)
     return user
 
+
 def keys_to_str(data):
     if isinstance(data,list):
         converted_list = list()
@@ -148,10 +149,12 @@ def keys_to_str(data):
 
     return converted_dict
 
+
 def save_config(config, target):
     with open(target, 'wt') as fp:
         fp.write(toml.dumps(config, encoder=DottedTomlEncoder()))
     return True
+
 
 def load_config(args):
     default_config_path = os.path.dirname(args.config)
@@ -220,26 +223,26 @@ def load_config(args):
         if user_config:
             config = merge_config(user_config, config)
     except Exception as ex:
-        logging.error("There was an error processing the configuration file:\n%s ",ex)
+        logging.error("There was an error processing the configuration file:\n%s ", ex)
         sys.exit(1)
 
     # dropins
     dropin = config['main']['confd']
     if dropin and os.path.isdir(dropin):
-        dropin += '*.toml' if dropin.endswith('/') else '/*.toml' # only toml here; yaml is no more
+        dropin += '*.toml' if dropin.endswith('/') else '/*.toml'  # only toml here; yaml is no more
         for conf in glob.glob(dropin):
             with open(conf) as toml_file:
                 additional_config = toml.load(toml_file)
                 config = merge_config(additional_config, config)
 
-    # the very first step is to normalize the display name so we don't need dozens of if/elif around
+    # the very first step is to normalize the display name, so we don't need dozens of if/elif around
     if config['ui']['display']['type'] in ('inky', 'inkyphat'):
         config['ui']['display']['type'] = 'inky'
 
     elif config['ui']['display']['type'] in ('papirus', 'papi'):
         config['ui']['display']['type'] = 'papirus'
 
-    elif config['ui']['display']['type'] in ('oledhat',):
+    elif config['ui']['display']['type'] in 'oledhat':
         config['ui']['display']['type'] = 'oledhat'
 
     elif config['ui']['display']['type'] in ('ws_1', 'ws1', 'waveshare_1', 'waveshare1'):
@@ -251,13 +254,19 @@ def load_config(args):
     elif config['ui']['display']['type'] in ('ws_3', 'ws3', 'waveshare_3', 'waveshare3'):
         config['ui']['display']['type'] = 'waveshare_3'
 
+    elif config['ui']['display']['type'] in ('ws_4', 'ws4', 'waveshare_4', 'waveshare4'):
+        config['ui']['display']['type'] = 'waveshare_4'
+
     elif config['ui']['display']['type'] in ('ws_27inch', 'ws27inch', 'waveshare_27inch', 'waveshare27inch'):
         config['ui']['display']['type'] = 'waveshare27inch'
+
+    elif config['ui']['display']['type'] in ('ws_27inchv2', 'ws27inchv2', 'waveshare_27inchv2', 'waveshare27inchv2'):
+        config['ui']['display']['type'] = 'waveshare27inchv2'
 
     elif config['ui']['display']['type'] in ('ws_29inch', 'ws29inch', 'waveshare_29inch', 'waveshare29inch'):
         config['ui']['display']['type'] = 'waveshare29inch'
 
-    elif config['ui']['display']['type'] in ('lcdhat',):
+    elif config['ui']['display']['type'] in 'lcdhat':
         config['ui']['display']['type'] = 'lcdhat'
 
     elif config['ui']['display']['type'] in ('dfrobot_1', 'df1'):
@@ -277,12 +286,18 @@ def load_config(args):
 
     elif config['ui']['display']['type'] in ('ws_213bc', 'ws213bc', 'waveshare_213bc', 'waveshare213bc'):
         config['ui']['display']['type'] = 'waveshare213bc'
+    
+    elif config['ui']['display']['type'] in ('ws_213bv4', 'ws213bv4', 'waveshare_213bv4', 'waveshare213inb_v4'):
+        config['ui']['display']['type'] = 'waveshare213inb_v4'
 
-    elif config['ui']['display']['type'] in ('waveshare35lcd'):
-        config['ui']['display']['type'] = 'waveshare35lcd'
-
-    elif config['ui']['display']['type'] in ('spotpear24inch'):
+    elif config['ui']['display']['type'] in 'spotpear24inch':
         config['ui']['display']['type'] = 'spotpear24inch'
+
+    elif config['ui']['display']['type'] in 'displayhatmini':
+        config['ui']['display']['type'] = 'displayhatmini'
+
+    elif config['ui']['display']['type'] in 'waveshare35lcd':
+        config['ui']['display']['type'] = 'waveshare35lcd'
 
     else:
         print("unsupported display type %s" % config['ui']['display']['type'])
@@ -434,6 +449,7 @@ def extract_from_pcap(path, fields):
                 raise FieldNotFoundError("Could not find field [RSSI]")
 
     return results
+
 
 class StatusFile(object):
     def __init__(self, path, data_format='raw'):

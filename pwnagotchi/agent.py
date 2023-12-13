@@ -166,8 +166,8 @@ class Agent(Client, Automata, AsyncAdvertiser, AsyncTrainer):
 
     def _filter_included(self, ap):
         return self._filter is None or \
-               self._filter.match(ap['hostname']) is not None or \
-               self._filter.match(ap['mac']) is not None
+            self._filter.match(ap['hostname']) is not None or \
+            self._filter.match(ap['mac']) is not None
 
     def set_access_points(self, aps):
         self._access_points = aps
@@ -230,8 +230,8 @@ class Agent(Client, Automata, AsyncAdvertiser, AsyncTrainer):
             if ap['mac'] == ap_mac:
                 for sta in ap['clients']:
                     if sta['mac'] == station_mac:
-                        return (ap, sta)
-                return (ap, {'mac': station_mac, 'vendor': ''})
+                        return ap, sta
+                return ap, {'mac': station_mac, 'vendor': ''}
         return None
 
     def _update_uptime(self, s):
@@ -260,7 +260,7 @@ class Agent(Client, Automata, AsyncAdvertiser, AsyncTrainer):
         txt = '%d (%d)' % (len(self._handshakes), tot)
 
         if self._last_pwnd is not None:
-            txt += ' [%s]' % self._last_pwnd[:20]
+            txt += ' [%s]' % self._last_pwnd[:11]  # So it doesn't overlap with fix_brcmfmac_plugin
 
         self._view.set('shakes', txt)
 
@@ -305,28 +305,54 @@ class Agent(Client, Automata, AsyncAdvertiser, AsyncTrainer):
             if not no_exceptions:
                 raise
 
-
     def start_session_fetcher(self):
         _thread.start_new_thread(self._fetch_stats, ())
 
-
     def _fetch_stats(self):
         while True:
-            s = self.session()
-            self._update_uptime(s)
-            self._update_advertisement(s)
-            self._update_peers()
-            self._update_counters()
-            self._update_handshakes(0)
-            time.sleep(1)
+            try:
+                s = self.session()
+            except Exception as err:
+                logging.error("[agent:_fetch_stats] self.session: %s" % repr(err))
+
+            try:
+                self._update_uptime(s)
+            except Exception as err:
+                logging.error("[agent:_fetch_stats] self.update_uptimes: %s" % repr(err))
+
+            try:
+                self._update_advertisement(s)
+            except Exception as err:
+                logging.error("[agent:_fetch_stats] self.update_advertisements: %s" % repr(err))
+
+            try:
+                self._update_peers()
+            except Exception as err:
+                logging.error("[agent:_fetch_stats] self.update_peers: %s" % repr(err))
+            try:
+                self._update_counters()
+            except Exception as err:
+                logging.error("[agent:_fetch_stats] self.update_counters: %s" % repr(err))
+            try:
+                self._update_handshakes(0)
+            except Exception as err:
+                logging.error("[agent:_fetch_stats] self.update_handshakes: %s" % repr(err))
+
+            time.sleep(5)
 
     async def _on_event(self, msg):
         found_handshake = False
         jmsg = json.loads(msg)
 
+
         # give plugins access to all raw bettercap events
         try:
             plugins.on('bcap_%s' % re.sub(r"[^a-z0-9_]+", "_",  jmsg['tag'].lower()), self, jmsg)
+
+        # give plugins access to the events
+        try:
+            plugins.on('bcap_%s' % re.sub(r"[^a-z0-9_]+", "_", jmsg['tag'].lower()), self, jmsg)
+
         except Exception as err:
             logging.error("Processing event: %s" % err)
 
@@ -349,10 +375,7 @@ class Agent(Client, Automata, AsyncAdvertiser, AsyncTrainer):
                         'hostname'] != '<hidden>' else ap_mac
                     logging.warning(
                         "!!! captured new handshake on channel %d, %d dBm: %s (%s) -> %s [%s (%s)] !!!",
-                            ap['channel'],
-                            ap['rssi'],
-                            sta['mac'], sta['vendor'],
-                            ap['hostname'], ap['mac'], ap['vendor'])
+                        ap['channel'], ap['rssi'], sta['mac'], sta['vendor'], ap['hostname'], ap['mac'], ap['vendor'])
                     plugins.on('handshake', self, filename, ap, sta)
                 found_handshake = True
             self._update_handshakes(1 if found_handshake else 0)
@@ -362,17 +385,17 @@ class Agent(Client, Automata, AsyncAdvertiser, AsyncTrainer):
         self.run('events.clear')
 
         while True:
-            logging.debug("polling events ...")
+            logging.debug("[agent:_event_poller] polling events ...")
             try:
                 loop.create_task(self.start_websocket(self._on_event))
                 loop.run_forever()
+                logging.debug("[agent:_event_poller] loop loop loop")
             except Exception as ex:
-                logging.debug("Error while polling via websocket (%s)", ex)
+                logging.debug("[agent:_event_poller] Error while polling via websocket (%s)", ex)
 
     def start_event_polling(self):
         # start a thread and pass in the mainloop
         _thread.start_new_thread(self._event_poller, (asyncio.get_event_loop(),))
-
 
     def is_module_running(self, module):
         s = self.session()
@@ -406,17 +429,20 @@ class Agent(Client, Automata, AsyncAdvertiser, AsyncTrainer):
 
         return self._history[who] < self._config['personality']['max_interactions']
 
-    def associate(self, ap, throttle=0):
+    def associate(self, ap, throttle=-1):
         if self.is_stale():
             logging.debug("recon is stale, skipping assoc(%s)", ap['mac'])
             return
+
+        if throttle == -1 and "throttle_a" in self._config['personality']:
+            throttle = self._config['personality']['throttle_a']
 
         if self._config['personality']['associate'] and self._should_interact(ap['mac']):
             self._view.on_assoc(ap)
 
             try:
                 logging.info("sending association frame to %s (%s %s) on channel %d [%d clients], %d dBm...",
-                    ap['hostname'], ap['mac'], ap['vendor'], ap['channel'], len(ap['clients']), ap['rssi'])
+                             ap['hostname'], ap['mac'], ap['vendor'], ap['channel'], len(ap['clients']), ap['rssi'])
                 self.run('wifi.assoc %s' % ap['mac'])
                 self._epoch.track(assoc=True)
             except Exception as e:
@@ -427,17 +453,21 @@ class Agent(Client, Automata, AsyncAdvertiser, AsyncTrainer):
                 time.sleep(throttle)
             self._view.on_normal()
 
-    def deauth(self, ap, sta, throttle=0):
+    def deauth(self, ap, sta, throttle=-1):
         if self.is_stale():
             logging.debug("recon is stale, skipping deauth(%s)", sta['mac'])
             return
+
+        if throttle == -1 and "throttle_d" in self._config['personality']:
+            throttle = self._config['personality']['throttle_d']
 
         if self._config['personality']['deauth'] and self._should_interact(sta['mac']):
             self._view.on_deauth(sta)
 
             try:
                 logging.info("deauthing %s (%s) from %s (%s %s) on channel %d, %d dBm ...",
-                    sta['mac'], sta['vendor'], ap['hostname'], ap['mac'], ap['vendor'], ap['channel'], ap['rssi'])
+                             sta['mac'], sta['vendor'], ap['hostname'], ap['mac'], ap['vendor'], ap['channel'],
+                             ap['rssi'])
                 self.run('wifi.deauth %s' % sta['mac'])
                 self._epoch.track(deauth=True)
             except Exception as e:

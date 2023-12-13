@@ -3,7 +3,8 @@ import logging
 import pwnagotchi.ui.fonts as fonts
 from pwnagotchi.ui.hw.base import DisplayImpl
 
-import os,time
+import os, time
+
 
 class Waveshare35lcd(DisplayImpl):
     def __init__(self, config):
@@ -14,7 +15,7 @@ class Waveshare35lcd(DisplayImpl):
         fonts.setup(12, 10, 12, 70, 25, 9)
         self._layout['width'] = 480
         self._layout['height'] = 320
-        self._layout['face'] = (110, 60)
+        self._layout['face'] = (110, 100)
         self._layout['name'] = (10, 30)
         self._layout['channel'] = (0, 0)
         self._layout['aps'] = (80, 0)
@@ -26,7 +27,7 @@ class Waveshare35lcd(DisplayImpl):
         self._layout['shakes'] = (10, 300)
         self._layout['mode'] = (440, 300)
         self._layout['status'] = {
-            'pos': (80, 180),
+            'pos': (80, 200),
             'font': fonts.status_font(fonts.Medium),
             'max': 100
         }
@@ -40,7 +41,7 @@ class Waveshare35lcd(DisplayImpl):
         from pwnagotchi.ui.hw.libs.fb import fb
         self._display = fb
         logging.info("initializing waveshare 3,5inch lcd display")
-        self._display.ready_fb(i=1)
+        self._display.ready_fb(i=0)
         self._display.black_scr()
 
     def render(self, canvas):

@@ -8,11 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-05 14:10+0200\n"
+"POT-Creation-Date: 2023-11-16 21:51+0100\n"
 "PO-Revision-Date: 2019-09-30 23:53+0200\n"
 "Last-Translator: kovach <2214005+kovachwt@users.noreply.github.com>\n"
 "Language-Team: \n"
-"Language: mk\n"
+"Language: Macedonian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -35,9 +35,19 @@ msgstr "AI спремно."
 msgid "The neural network is ready."
 msgstr "Невронската мрежае спремна."
 
+msgid "Generating keys, do not turn off ..."
+msgstr ""
+
 #, python-brace-format
 msgid "Hey, channel {channel} is free! Your AP will say thanks."
 msgstr "Еј, каналот {channel} еслободен! APто ќе тикаже фала."
+
+msgid "Reading last session logs ..."
+msgstr ""
+
+#, python-brace-format
+msgid "Read {lines_so_far} log lines so far ..."
+msgstr ""
 
 msgid "I'm bored ..."
 msgstr "Досаднооо ..."
@@ -60,6 +70,12 @@ msgstr "Многу тажно ..."
 msgid "I'm sad"
 msgstr "Тажно"
 
+msgid "Leave me alone ..."
+msgstr "Толку сам ..."
+
+msgid "I'm mad at you!"
+msgstr ""
+
 msgid "I'm living the life!"
 msgstr "Ммхх животче!"
 
@@ -76,12 +92,20 @@ msgid "My crime is that of curiosity ..."
 msgstr "Виновен сум само заљубопитност ..."
 
 #, python-brace-format
-msgid "Hello {name}! Nice to meet you. {name}"
-msgstr "Здраво{name}! Мило ми е. {name}"
+msgid "Hello {name}! Nice to meet you."
+msgstr "Здраво{name}! Мило ми е."
 
 #, python-brace-format
-msgid "Unit {name} is nearby! {name}"
-msgstr "Опаа {name} е во близина! {name}"
+msgid "Yo {name}! Sup?"
+msgstr ""
+
+#, python-brace-format
+msgid "Hey {name} how are you doing?"
+msgstr ""
+
+#, python-brace-format
+msgid "Unit {name} is nearby!"
+msgstr "Опаа {name} е во близина!"
 
 #, python-brace-format
 msgid "Uhm ... goodbye {name}"
@@ -102,6 +126,12 @@ msgstr "{name} промаши!"
 msgid "Missed!"
 msgstr "Промаши!"
 
+msgid "Good friends are a blessing!"
+msgstr ""
+
+msgid "I love my friends!"
+msgstr ""
+
 msgid "Nobody wants to play with me ..."
 msgstr "Никој не сака даси игра со мене ..."
 
@@ -121,6 +151,12 @@ msgstr "Дреммм"
 #, python-brace-format
 msgid "ZzzZzzz ({secs}s)"
 msgstr "Дремммм ({secs}с)"
+
+msgid "Good night."
+msgstr ""
+
+msgid "Zzz"
+msgstr ""
 
 #, python-brace-format
 msgid "Waiting for {secs}s ..."
@@ -158,12 +194,27 @@ msgstr "Кикбан {mac}!"
 msgid "Cool, we got {num} new handshake{plural}!"
 msgstr "Кул, фативме {num} нови ракувања!"
 
+#, python-brace-format
+msgid "You have {count} new message{plural}!"
+msgstr "Кул, фативме {count} нови ракувања!"
+
 msgid "Oops, something went wrong ... Rebooting ..."
 msgstr "Упс, нешто не еко што треба ... Рестартирам ..."
 
 #, python-brace-format
+msgid "Uploading data to {to} ..."
+msgstr ""
+
+#, python-brace-format
+msgid "Downloading from {name} ..."
+msgstr ""
+
+#, python-brace-format
 msgid "Kicked {num} stations\n"
 msgstr "Избацив {num} станици\n"
+
+msgid "Made >999 new friends\n"
+msgstr ">999 нови другарчиња\n"
 
 #, python-brace-format
 msgid "Made {num} new friends\n"

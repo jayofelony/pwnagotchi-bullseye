@@ -1,5 +1,4 @@
 import subprocess
-import socket
 import requests
 import json
 import logging
@@ -13,10 +12,9 @@ API_ADDRESS = "http://127.0.0.1:8666/api/v1"
 def is_connected():
     try:
         # check DNS
-        host = socket.gethostbyname('api.pwnagotchi.ai')
-        if host:
-            # check connectivity itself
-            socket.create_connection((host, 443), timeout=30)
+        host = 'https://api.opwngrid.xyz/api/v1/uptime'
+        r = requests.get(host, headers=None, timeout=(30.0, 60.0))
+        if r.json().get('isUp'):
             return True
     except:
         pass
@@ -69,8 +67,13 @@ def update_data(last_session):
             brain = json.load(fp)
     except:
         pass
+    enabled = [name for name, options in pwnagotchi.config['main']['plugins'].items() if
+               'enabled' in options and options['enabled']]
+    language = pwnagotchi.config['main']['lang']
+    ai = pwnagotchi.config['ai']['enabled']
 
     data = {
+        'ai': ai,
         'session': {
             'duration': last_session.duration,
             'epochs': last_session.epochs,
@@ -85,7 +88,12 @@ def update_data(last_session):
         },
         'uname': subprocess.getoutput("uname -a"),
         'brain': brain,
-        'version': pwnagotchi.__version__
+        'version': pwnagotchi.__version__,
+        'build': "Pwnagotchi-Torch by Jayofelony",
+        'plugins': enabled,
+        'language': language,
+        'bettercap': subprocess.getoutput("bettercap -version").split(".\n\n")[1],
+        'opwngrid': subprocess.getoutput("pwngrid -version")
     }
 
     logging.debug("updating grid data: %s" % data)

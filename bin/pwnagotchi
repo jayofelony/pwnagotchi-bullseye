@@ -5,14 +5,17 @@ import time
 import signal
 import sys
 import toml
+import requests
+import os
 
 import pwnagotchi
 from pwnagotchi import utils
+from pwnagotchi.google import cmd as google_cmd
 from pwnagotchi.plugins import cmd as plugins_cmd
 from pwnagotchi import log
 from pwnagotchi import restart
 from pwnagotchi import fs
-from pwnagotchi.utils import DottedTomlEncoder
+from pwnagotchi.utils import DottedTomlEncoder, parse_version as version_to_tuple
 
 
 def do_clear(display):
@@ -69,13 +72,14 @@ def do_auto_mode(agent):
                     # deauth all client stations in order to get a full handshake
                     for sta in ap['clients']:
                         agent.deauth(ap, sta)
+                        time.sleep(1)  # delay to not trigger nexmon firmware bugs
 
             # An interesting effect of this:
             #
             # From Pwnagotchi's perspective, the more new access points
             # and / or client stations nearby, the longer one epoch of
             # its relative time will take ... basically, in Pwnagotchi's universe,
-            # WiFi electromagnetic fields affect time like gravitational fields
+            # Wi-Fi electromagnetic fields affect time like gravitational fields
             # affect ours ... neat ^_^
             agent.next_epoch()
 
@@ -91,10 +95,22 @@ def do_auto_mode(agent):
             else:
                 logging.exception("main loop exception (%s)", e)
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser = plugins_cmd.add_parsers(parser)
 
+if __name__ == '__main__':
+    def add_parsers(parser):
+        """
+        Adds the plugins and google subcommands
+        """
+        subparsers = parser.add_subparsers()
+
+        # Add parsers from plugins_cmd
+        plugins_cmd.add_parsers(subparsers)
+
+        # Add parsers from google_cmd
+        google_cmd.add_parsers(subparsers)
+
+    parser = argparse.ArgumentParser(prog="pwnagotchi")
+    # pwnagotchi --help
     parser.add_argument('-C', '--config', action='store', dest='config', default='/etc/pwnagotchi/default.toml',
                         help='Main configuration file.')
     parser.add_argument('-U', '--user-config', action='store', dest='user_config', default='/etc/pwnagotchi/config.toml',
@@ -116,17 +132,53 @@ if __name__ == '__main__':
     parser.add_argument('--print-config', dest="print_config", action="store_true", default=False,
                         help="Print the configuration.")
 
+    # Jayofelony added these
+    parser.add_argument('--check-update', dest="check_update", action="store_true", default=False,
+                        help="Check for updates on Pwnagotchi. And tells current version.")
+    parser.add_argument('--donate', dest="donate", action="store_true", default=False,
+                        help="How to donate to this project.")
+
+    # pwnagotchi plugins --help
+    add_parsers(parser)
     args = parser.parse_args()
 
-
     if plugins_cmd.used_plugin_cmd(args):
-      config = utils.load_config(args)
-      log.setup_logging(args, config)
-      rc = plugins_cmd.handle_cmd(args, config)
-      sys.exit(rc)
+        config = utils.load_config(args)
+        log.setup_logging(args, config)
+        rc = plugins_cmd.handle_cmd(args, config)
+        sys.exit(rc)
+    if google_cmd.used_google_cmd(args):
+        config = utils.load_config(args)
+        log.setup_logging(args, config)
+        rc = google_cmd.handle_cmd(args)
+        sys.exit(rc)
 
     if args.version:
         print(pwnagotchi.__version__)
+        sys.exit(0)
+
+    if args.donate:
+        print("Donations can made @ https://www.patreon.com/pwnagotchi_torch \n\nBut only if you really want to!")
+        sys.exit(0)
+
+    if args.check_update:
+        resp = requests.get("https://api.github.com/repos/jayofelony/pwnagotchi/releases/latest")
+        latest = resp.json()
+        latest_ver = latest['tag_name'].replace('v', '')
+
+        local = version_to_tuple(pwnagotchi.__version__)
+        remote = version_to_tuple(latest_ver)
+        if remote > local:
+            user_input = input("There is a new version available! Update from v%s to v%s?\n[y(es)/n(o)]"
+                               % (pwnagotchi.__version__, latest_ver))
+            # input validation
+            if user_input.lower() in ('y', 'yes'):
+                os.system("rm /root/.auto-update && systemctl restart pwnagotchi")
+                print("Okay, give me a couple minutes. Just watch pwnlog while you wait.")
+            elif user_input.lower() in ('n', 'no'):  # using this elif for readability
+                print("Okay, guess not!")
+        else:
+            print("You are currently on the latest release, v%s." % pwnagotchi.__version__)
         sys.exit(0)
 
     config = utils.load_config(args)
