@@ -16,9 +16,10 @@ from pwnagotchi.ui.components import *
 from pwnagotchi.ui.state import State
 from pwnagotchi.voice import Voice
 
-WHITE = 0x00
-BLACK = 0xff
+WHITE = 0xff
+BLACK = 0x00
 ROOT = None
+
 
 
 class View(object):
@@ -28,6 +29,14 @@ class View(object):
         # setup faces from the configuration in case the user customized them
         faces.load_from_config(config['ui']['faces'])
 
+        self._invert = config['ui']['invert']
+
+        if self._invert:
+            global WHITE
+            global BLACK
+            WHITE = 0x00
+            BLACK = 0xff
+            
         self._agent = None
         self._render_cbs = []
         self._config = config
