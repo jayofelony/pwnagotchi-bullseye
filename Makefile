@@ -25,6 +25,7 @@ ifneq (,$(UNSHARE))
 UNSHARE := $(UNSHARE) --uts
 endif
 
+# sudo apt-get install qemu-user-static qemu-utils
 all: clean image clean
 
 update_langs:
