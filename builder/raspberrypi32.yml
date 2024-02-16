@@ -276,13 +276,31 @@
         dest: /usr/local/lib/libpcap.so.0.8
         state: link
 
+    # install latest hcxtools
+
+    - name: clone hcxtools
+      git:
+        repo: https://github.com/ZerBea/hcxtools.git
+        dest: /usr/local/src/hcxtools
+
+    - name: install hcxtools
+      shell: "make && make install"
+      args:
+        executable: /bin/bash
+        chdir: /usr/local/src/hcxtools
+
+    - name: remove hcxtools directory
+      file:
+        state: absent
+        path: /usr/local/src/hcxtools
+
     ###############################################################
     # Install nexmon to fix wireless scanning (takes 2.5G of space)
     ###############################################################
 
     # Install nexmon for all boards
     - name: build and install nexmon as needed
-      include_tasks: nexmon.yml
+      include_tasks: extras/nexmon.yml
       loop: "{{ boards }}"
 
     # some pizero2w have the pizeroW wifi chip
@@ -371,7 +389,7 @@
 
     - name: Install go-1.21
       unarchive:
-        src: https://go.dev/dl/go1.21.4.linux-armv6l.tar.gz
+        src: https://go.dev/dl/go1.21.6.linux-armv6l.tar.gz
         dest: /usr/local
         remote_src: yes
       register: golang
@@ -385,7 +403,7 @@
           export PATH=/usr/local/go/bin:$PATH:$GOPATH/bin
       when: golang.changed
 
-    - name: download opwngrid
+    - name: download pwngrid
       unarchive:
         remote_src: yes
         src: "{{ packages.opwngrid.url }}"
