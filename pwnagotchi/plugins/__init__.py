@@ -5,6 +5,7 @@ import importlib.util
 import logging
 import os
 import threading
+import pwnagotchi.grid
 
 default_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "default")
 loaded = {}

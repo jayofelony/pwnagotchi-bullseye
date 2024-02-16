@@ -496,7 +496,6 @@ class WebConfig(plugins.Plugin):
         self.ready = False
         self.mode = 'MANU'
         self._agent = None
-        self.options = dict()
 
     def on_config_changed(self, config):
         self.config = config

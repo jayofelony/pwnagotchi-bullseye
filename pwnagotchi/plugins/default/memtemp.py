@@ -50,9 +50,6 @@ class MemTemp(plugins.Plugin):
     LABEL_SPACING = 0
     FIELD_WIDTH = 4
 
-    def __init__(self):
-        self.options = dict()
-
     def on_loaded(self):
         self._last_cpu_load = self._cpu_stat()
         logging.info("memtemp plugin loaded.")
@@ -68,7 +65,7 @@ class MemTemp(plugins.Plugin):
         Returns the splitted first line of the /proc/stat file
         """
         with open('/proc/stat', 'rt') as fp:
-            return list(map(int, fp.readline().split()[1:]))
+            return list(map(int,fp.readline().split()[1:]))
 
     def cpu_load_since(self):
         """

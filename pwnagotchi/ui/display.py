@@ -103,14 +103,17 @@ class Display(View):
     def is_waveshare2in13d(self):
         return self._implementation.name == 'waveshare2in13d'
 
-    def is_waveshare2in23g(self):
-        return self._implementation.name == 'waveshare2in23g'
+    def is_waveshare2in13g(self):
+        return self._implementation.name == 'waveshare2in13g'
 
     def is_waveshare2in36g(self):
         return self._implementation.name == 'waveshare2in36g'
 
     def is_waveshare2in66(self):
         return self._implementation.name == 'waveshare2in66'
+
+    def is_waveshare2in66b(self):
+        return self._implementation.name == 'waveshare2in66b'
 
     def is_waveshare2in66g(self):
         return self._implementation.name == 'waveshare2in66g'

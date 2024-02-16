@@ -7,7 +7,6 @@ from pwnagotchi.ui.hw.base import DisplayImpl
 class Waveshare154(DisplayImpl):
     def __init__(self, config):
         super(Waveshare154, self).__init__(config, 'waveshare1in54')
-        self._display = None
 
     def layout(self):
         fonts.setup(10, 9, 10, 35, 25, 9)
@@ -32,15 +31,16 @@ class Waveshare154(DisplayImpl):
         return self._layout
 
     def initialize(self):
-        logging.info("initializing waveshare v154 display")
+        logging.info("initializing waveshare v1in54 display")
         from pwnagotchi.ui.hw.libs.waveshare.v1in54.epd1in54 import EPD
         self._display = EPD()
-        self._display.init()
+        self._display.init(0x00)
         self._display.Clear()
 
     def render(self, canvas):
         buf = self._display.getbuffer(canvas)
-        self._display.display(buf, None)
+        self._display.display(buf)
 
     def clear(self):
+        # pass
         self._display.Clear()

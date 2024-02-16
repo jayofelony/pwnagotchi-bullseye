@@ -1,5 +1,11 @@
 main.name = "pwnagotchi"
 main.lang = "en"
+main.whitelist = [
+    "EXAMPLE_NETWORK",
+    "ANOTHER_EXAMPLE_NETWORK",
+    "fo:od:ba:be:fo:od",
+    "fo:od:ba"
+]
 main.confd = "/etc/pwnagotchi/conf.d/"
 main.custom_plugin_repos = [
     "https://github.com/jayofelony/pwnagotchi-torch-plugins/archive/master.zip",
@@ -11,6 +17,10 @@ main.custom_plugin_repos = [
 ]
 
 main.custom_plugins = "/usr/local/share/pwnagotchi/custom-plugins/"
+
+main.plugins.aircrackonly.enabled = true
+
+main.plugins.hashie.enabled = true
 
 main.plugins.auto-update.enabled = true
 main.plugins.auto-update.install = true
@@ -55,9 +65,6 @@ main.plugins.gps.device = "/dev/ttyUSB0" # for GPSD: "localhost:2947"
 
 main.plugins.grid.enabled = true
 main.plugins.grid.report = true
-main.plugins.grid.exclude = [
-    "YourHomeNetworkHere"
-]
 
 main.plugins.logtail.enabled = false
 main.plugins.logtail.max-lines = 10000
@@ -73,10 +80,6 @@ main.plugins.onlinehashcrack.enabled = false
 main.plugins.onlinehashcrack.email = ""
 main.plugins.onlinehashcrack.dashboard = ""
 main.plugins.onlinehashcrack.single_files = false
-main.plugins.onlinehashcrack.whitelist = []
-
-main.plugins.paw-gps.enabled = false
-main.plugins.paw-gps.ip = "192.168.44.1:8080"
 
 main.plugins.pisugar2.enabled = false
 main.plugins.pisugar2.shutdown = 5
@@ -100,29 +103,22 @@ main.plugins.webgpsmap.enabled = false
 
 main.plugins.wigle.enabled = false
 main.plugins.wigle.api_key = ""
-main.plugins.wigle.whitelist = []
-main.plugins.wigle.donate = true
+main.plugins.wigle.donate = false
 
 main.plugins.wpa-sec.enabled = false
 main.plugins.wpa-sec.api_key = ""
 main.plugins.wpa-sec.api_url = "https://wpa-sec.stanev.org"
 main.plugins.wpa-sec.download_results = false
-main.plugins.wpa-sec.whitelist = []
 
 main.iface = "wlan0mon"
 main.mon_start_cmd = "/usr/bin/monstart"
 main.mon_stop_cmd = "/usr/bin/monstop"
 main.mon_max_blind_epochs = 50
 main.no_restart = false
-main.whitelist = [
-    "EXAMPLE_NETWORK",
-    "ANOTHER_EXAMPLE_NETWORK",
-    "fo:od:ba:be:fo:od",
-    "fo:od:ba"
-]
+
 main.filter = ""
 
-main.log.path = "/var/log/pwnagotchi.log"
+main.log.path = "/home/pi/logs/pwnagotchi.log"
 main.log.rotation.enabled = true
 main.log.rotation.size = "10M"
 
@@ -159,6 +155,8 @@ personality.sad_num_epochs = 25
 personality.bond_encounters_factor = 20000
 personality.throttle_a = 0.4
 personality.throttle_d = 0.9
+
+personality.clear_on_exit = true # clear display when shutting down cleanly
 
 ui.fps = 0.0
 ui.font.name = "DejaVuSansMono" # for japanese: fonts-japanese-gothic
@@ -200,14 +198,8 @@ ui.web.on_frame = ""
 
 ui.display.enabled = false
 ui.display.rotation = 180
-ui.display.type = "waveshare_2"
-ui.display.color = "black" # required for waveshare_1 and 2, maybe some others
+ui.display.type = "waveshare_4"
 
-bettercap.scheme = "http"
-bettercap.hostname = "localhost"
-bettercap.port = 8081
-bettercap.username = "pwnagotchi"
-bettercap.password = "pwnagotchi"
 bettercap.handshakes = "/root/handshakes"
 bettercap.silence = [
     "ble.device.new",
@@ -226,7 +218,7 @@ bettercap.silence = [
 
 fs.memory.enabled = true
 fs.memory.mounts.log.enabled = true
-fs.memory.mounts.log.mount = "/var/log"
+fs.memory.mounts.log.mount = "/home/pi/logs"
 fs.memory.mounts.log.size = "50M"
 fs.memory.mounts.log.sync = 60
 fs.memory.mounts.log.zram = true

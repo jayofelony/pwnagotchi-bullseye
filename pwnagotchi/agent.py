@@ -21,17 +21,17 @@ RECOVERY_DATA_FILE = '/root/.pwnagotchi-recovery'
 
 class Agent(Client, Automata, AsyncAdvertiser, AsyncTrainer):
     def __init__(self, view, config, keypair):
-        Client.__init__(self, config['bettercap']['hostname'],
-                        config['bettercap']['scheme'],
-                        config['bettercap']['port'],
-                        config['bettercap']['username'],
-                        config['bettercap']['password'])
+        Client.__init__(self,
+                        "127.0.0.1" if "hostname" not in config['bettercap'] else config['bettercap']['hostname'],
+                        "http" if "scheme" not in config['bettercap'] else config['bettercap']['scheme'],
+                        8081 if "port" not in config['bettercap'] else config['bettercap']['port'],
+                        "pwnagotchi" if "username" not in config['bettercap'] else config['bettercap']['username'],
+                        "pwnagotchi" if "password" not in config['bettercap'] else config['bettercap']['password'])
         Automata.__init__(self, config, view)
         AsyncAdvertiser.__init__(self, config, view, keypair)
         AsyncTrainer.__init__(self, config)
 
         self._started_at = time.time()
-        self._filter = None if not config['main']['filter'] else re.compile(config['main']['filter'])
         self._current_channel = 0
         self._tot_aps = 0
         self._aps_on_channel = 0
@@ -164,11 +164,6 @@ class Agent(Client, Automata, AsyncAdvertiser, AsyncTrainer):
 
         self.wait_for(recon_time, sleeping=False)
 
-    def _filter_included(self, ap):
-        return self._filter is None or \
-            self._filter.match(ap['hostname']) is not None or \
-            self._filter.match(ap['mac']) is not None
-
     def set_access_points(self, aps):
         self._access_points = aps
         plugins.on('wifi_update', self, aps)
@@ -184,11 +179,10 @@ class Agent(Client, Automata, AsyncAdvertiser, AsyncTrainer):
             for ap in s['wifi']['aps']:
                 if ap['encryption'] == '' or ap['encryption'] == 'OPEN':
                     continue
-                elif ap['hostname'] not in whitelist \
-                        and ap['mac'].lower() not in whitelist \
-                        and ap['mac'][:8].lower() not in whitelist:
-                    if self._filter_included(ap):
-                        aps.append(ap)
+                elif ap['hostname'] in whitelist or ap['mac'][:13].lower() in whitelist or ap['mac'].lower() in whitelist:
+                    continue
+                else:
+                    aps.append(ap)
         except Exception as e:
             logging.exception("Error while getting access points (%s)", e)
 
@@ -274,6 +268,10 @@ class Agent(Client, Automata, AsyncAdvertiser, AsyncTrainer):
         self.set_rebooting()
         self._save_recovery_data()
         pwnagotchi.reboot()
+
+    def _restart(self):
+        self._save_recovery_data()
+        pwnagotchi.restart("AUTO")
 
     def _save_recovery_data(self):
         logging.warning("writing recovery data to %s ...", RECOVERY_DATA_FILE)
@@ -427,7 +425,6 @@ class Agent(Client, Automata, AsyncAdvertiser, AsyncTrainer):
         if self.is_stale():
             logging.debug("recon is stale, skipping assoc(%s)", ap['mac'])
             return
-
         if throttle == -1 and "throttle_a" in self._config['personality']:
             throttle = self._config['personality']['throttle_a']
 

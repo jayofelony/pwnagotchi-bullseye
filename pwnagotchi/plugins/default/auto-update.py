@@ -28,7 +28,6 @@ def check(version, repo, native=True):
     resp = requests.get("https://api.github.com/repos/%s/releases/latest" % repo)
     latest = resp.json()
     info['available'] = latest_ver = latest['tag_name'].replace('v', '')
-    is_arm = info['arch'].startswith('arm')
     is_arm64 = info['arch'].startswith('aarch')
 
     local = version_to_tuple(info['current'])
@@ -37,15 +36,7 @@ def check(version, repo, native=True):
         if not native:
             info['url'] = "https://github.com/%s/archive/%s.zip" % (repo, latest['tag_name'])
         else:
-            if is_arm:
-                # check if this release is compatible with arm
-                for asset in latest['assets']:
-                    download_url = asset['browser_download_url']
-                    if (download_url.endswith('.zip') and
-                            (info['arch'] in download_url or (is_arm and 'arm' in download_url))):
-                        info['url'] = download_url
-                        break
-            elif is_arm64:
+            if is_arm64:
                 # check if this release is compatible with aarch64
                 for asset in latest['assets']:
                     download_url = asset['browser_download_url']
@@ -139,7 +130,7 @@ def install(display, update):
             source_path = "%s-%s" % (source_path, update['available'])
 
         # setup.py is going to install data files for us
-        os.system("cd %s && pip3 install ." % source_path)
+        os.system("cd %s && pip3 install . --break-system-packages" % source_path)
     return True
 
 
@@ -182,7 +173,7 @@ class AutoUpdate(plugins.Plugin):
             if not self.ready:
                 return
 
-            if self.status.newer_than_hours(self.options['interval']):
+            if self.status.newer_then_hours(self.options['interval']):
                 logging.debug("[update] last check happened less than %d hours ago" % self.options['interval'])
                 return
 
@@ -196,11 +187,9 @@ class AutoUpdate(plugins.Plugin):
 
                 to_install = []
                 to_check = [
-                    # removing bettercap and pwngrid from auto-update as compiling new versions uses a newer libc6,
-                    # which is not compatible with bullseye RaspiOS.
-                    # ('jayofelony/bettercap', parse_version('bettercap -version'), True, 'bettercap'),
-                    # ('jayofelony/pwngrid', parse_version('pwngrid -version'), True, 'pwngrid-peer'),
-                    ('jayofelony/pwnagotchi-torch', pwnagotchi.__version__, False, 'pwnagotchi')
+                    ('jayofelony/bettercap', parse_version('bettercap -version'), True, 'bettercap'),
+                    ('jayofelony/pwngrid', parse_version('pwngrid -version'), True, 'pwngrid-peer'),
+                    ('jayofelony/pwnagotchi-bookworm', pwnagotchi.__version__, False, 'pwnagotchi')
                 ]
 
                 for repo, local_version, is_native, svc_name in to_check:
@@ -223,7 +212,7 @@ class AutoUpdate(plugins.Plugin):
                             if install(display, update):
                                 num_installed += 1
                     else:
-                        prev_status = '%d new update%c available!' % (num_updates, 's' if num_updates > 1 else '')
+                        prev_status = '%d new update%s available!' % (num_updates, 's' if num_updates > 1 else '')
 
                 logging.info("[update] done")
 

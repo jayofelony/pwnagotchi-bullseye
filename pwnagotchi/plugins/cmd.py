@@ -29,16 +29,14 @@ def add_parsers(subparsers):
 
     # pwnagotchi plugins list
     parser_plugins_list = plugin_subparsers.add_parser('list', help='List available pwnagotchi plugins')
-    parser_plugins_list.add_argument('-i', '--installed', action='store_true', required=False,
-                                     help='List also installed plugins')
+    parser_plugins_list.add_argument('-i', '--installed', action='store_true', required=False, help='List also installed plugins')
 
     # pwnagotchi plugins update
     parser_plugins_update = plugin_subparsers.add_parser('update', help='Updates the database')
 
     # pwnagotchi plugins upgrade
     parser_plugins_upgrade = plugin_subparsers.add_parser('upgrade', help='Upgrades plugins')
-    parser_plugins_upgrade.add_argument('pattern', type=str, nargs='?', default='*',
-                                        help="Filter expression (wildcards allowed)")
+    parser_plugins_upgrade.add_argument('pattern', type=str, nargs='?', default='*', help="Filter expression (wildcards allowed)")
 
     # pwnagotchi plugins enable
     parser_plugins_enable = plugin_subparsers.add_parser('enable', help='Enables a plugin')
@@ -114,6 +112,7 @@ def edit(args, config):
     from tempfile import NamedTemporaryFile
     from pwnagotchi.utils import DottedTomlEncoder
 
+    new_plugin_config = None
     with NamedTemporaryFile(suffix=".tmp", mode='r+t') as tmp:
         tmp.write(toml.dumps(plugin_config, encoder=DottedTomlEncoder()))
         tmp.flush()
@@ -165,8 +164,8 @@ def upgrade(args, config, pattern='*'):
         installed_version = _extract_version(filename)
 
         if installed_version and available_version:
-            if available_version <= installed_version:
-                continue
+                if available_version <= installed_version:
+                    continue
         else:
             continue
 
@@ -200,9 +199,6 @@ def list_plugins(args, config, pattern='*'):
     available_not_installed = set(available.keys()) - set(installed.keys())
 
     max_len_list = available_and_installed if args.installed else available_not_installed
-    if not max_len_list:
-        logging.info('No plugins found. Try running: pwnagotchi plugins update')
-        return 1
     max_len = max(map(len, max_len_list))
     header = line.format(name='Plugin', width=max_len, version='Version', enabled='Active', status='Status')
     line_length = max(max_len, len('Plugin')) + len(header) - len('Plugin') - 12  # lol
@@ -231,16 +227,14 @@ def list_plugins(args, config, pattern='*'):
                                     'enabled' in config['main']['plugins'][plugin] and
                                     config['main']['plugins'][plugin]['enabled']) else 'disabled'
 
-            print(line.format(name=plugin, width=max_len, version='.'.join(installed_version), enabled=enabled,
-                              status=status))
+            print(line.format(name=plugin, width=max_len, version='.'.join(installed_version), enabled=enabled, status=status))
 
     for plugin in sorted(available_not_installed):
         if not fnmatch(plugin, pattern):
             continue
         found = True
         available_version = _extract_version(available[plugin])
-        print(line.format(name=plugin, width=max_len, version='.'.join(available_version), enabled='-',
-                          status='available'))
+        print(line.format(name=plugin, width=max_len, version='.'.join(available_version), enabled='-', status='available'))
 
     print('-' * line_length)
 

@@ -3,6 +3,7 @@ import logging
 import json
 import csv
 import requests
+import pwnagotchi
 
 from io import StringIO
 from datetime import datetime
@@ -24,7 +25,11 @@ def _extract_gps_data(path):
             with open(path, 'r') as json_file:
                 tempJson = json.load(json_file)
                 d = datetime.utcfromtimestamp(int(tempJson["ts"]))
-                return {"Latitude": tempJson["location"]["lat"], "Longitude": tempJson["location"]["lng"], "Altitude": 10, "Updated": d.strftime('%Y-%m-%dT%H:%M:%S.%f')}
+                return {"Latitude": tempJson["location"]["lat"],
+                        "Longitude": tempJson["location"]["lng"],
+                        "Altitude": 10,
+                        "Accuracy": tempJson["accuracy"],
+                        "Updated": d.strftime('%Y-%m-%dT%H:%M:%S.%f')}
         else:
             with open(path, 'r') as json_file:
                 return json.load(json_file)
@@ -38,7 +43,7 @@ def _format_auth(data):
     out = ""
     for auth in data:
         out = f"{out}[{auth}]"
-    return out
+    return [f"{auth}" for auth in data]
 
 
 def _transform_wigle_entry(gps_data, pcap_data, plugin_version):
@@ -47,10 +52,10 @@ def _transform_wigle_entry(gps_data, pcap_data, plugin_version):
     """
     dummy = StringIO()
     # write kismet header
+    dummy.write(f"WigleWifi-1.6,appRelease={plugin_version},model=pwnagotchi,release={__pwnagotchi_version__},"
+                f"device={pwnagotchi.name()},display=kismet,board=RaspberryPi,brand=pwnagotchi,star=Sol,body=3,subBody=0\n")
     dummy.write(
-        "WigleWifi-1.4,appRelease={},model=pwnagotchi,release={},device=pwnagotchi,display=kismet,board=kismet,brand=pwnagotchi\n".format(plugin_version, __pwnagotchi_version__))
-    dummy.write(
-        "MAC,SSID,AuthMode,FirstSeen,Channel,RSSI,CurrentLatitude,CurrentLongitude,AltitudeMeters,AccuracyMeters,Type")
+        "MAC,SSID,AuthMode,FirstSeen,Channel,RSSI,CurrentLatitude,CurrentLongitude,AltitudeMeters,AccuracyMeters,Type\n")
 
     writer = csv.writer(dummy, delimiter=",", quoting=csv.QUOTE_NONE, escapechar="\\")
     writer.writerow([
@@ -64,7 +69,7 @@ def _transform_wigle_entry(gps_data, pcap_data, plugin_version):
         gps_data['Latitude'],
         gps_data['Longitude'],
         gps_data['Altitude'],
-        0,  # accuracy?
+        gps_data['Accuracy'],
         'WIFI'])
     return dummy.getvalue()
 
@@ -84,7 +89,7 @@ def _send_to_wigle(lines, api_key, donate=True, timeout=30):
     headers = {'Authorization': f"Basic {api_key}",
                'Accept': 'application/json'}
     data = {'donate': 'on' if donate else 'false'}
-    payload = {'file': dummy, 'type': 'text/csv'}
+    payload = {'file': (pwnagotchi.name() + ".csv", dummy, 'multipart/form-data', {'Expires': '0'})}
     try:
         res = requests.post('https://api.wigle.net/api/v2/file/upload',
                             data=data,
@@ -99,10 +104,10 @@ def _send_to_wigle(lines, api_key, donate=True, timeout=30):
 
 
 class Wigle(plugins.Plugin):
-    __author__ = '33197631+dadav@users.noreply.github.com'
-    __version__ = '2.0.0'
-    __license__ = 'GPL3'
-    __description__ = 'This plugin automatically uploads collected wifis to wigle.net'
+    __author__ = "Dadav and updated by Jayofelony"
+    __version__ = "3.0.1"
+    __license__ = "GPL3"
+    __description__ = "This plugin automatically uploads collected WiFi to wigle.net"
 
     def __init__(self):
         self.ready = False
@@ -116,18 +121,15 @@ class Wigle(plugins.Plugin):
             logging.debug("WIGLE: api_key isn't set. Can't upload to wigle.net")
             return
 
-        if not 'whitelist' in self.options:
-            self.options['whitelist'] = list()
-
-        if not 'donate' in self.options:
-            self.options['donate'] = True
+        if 'donate' not in self.options:
+            self.options['donate'] = False
 
         self.ready = True
         logging.info("WIGLE: ready")
 
     def on_internet_available(self, agent):
         """
-        Called in manual mode when there's internet connectivity
+        Called when there's internet connectivity
         """
         if not self.ready or self.lock.locked():
             return
@@ -141,9 +143,9 @@ class Wigle(plugins.Plugin):
         all_files = os.listdir(handshake_dir)
         all_gps_files = [os.path.join(handshake_dir, filename)
                          for filename in all_files
-                         if filename.endswith('.gps.json') or filename.endswith('.paw-gps.json') or filename.endswith('.geo.json')]
+                         if filename.endswith('.gps.json') or filename.endswith('.geo.json')]
 
-        all_gps_files = remove_whitelisted(all_gps_files, self.options['whitelist'])
+        all_gps_files = remove_whitelisted(all_gps_files, config['main']['whitelist'])
         new_gps_files = set(all_gps_files) - set(reported) - set(self.skip)
         if new_gps_files:
             logging.info("WIGLE: Internet connectivity detected. Uploading new handshakes to wigle.net")
@@ -152,8 +154,6 @@ class Wigle(plugins.Plugin):
             for gps_file in new_gps_files:
                 if gps_file.endswith('.gps.json'):
                     pcap_filename = gps_file.replace('.gps.json', '.pcap')
-                if gps_file.endswith('.paw-gps.json'):
-                    pcap_filename = gps_file.replace('.paw-gps.json', '.pcap')
                 if gps_file.endswith('.geo.json'):
                     pcap_filename = gps_file.replace('.geo.json', '.pcap')
                 if not os.path.exists(pcap_filename):
