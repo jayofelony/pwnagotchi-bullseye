@@ -33,14 +33,22 @@ class Waveshare154V2(DisplayImpl):
     def initialize(self):
         logging.info("initializing waveshare1in54_v2 display")
         from pwnagotchi.ui.hw.libs.waveshare.v1in54_v2.epd1in54_V2 import EPD
-        self._display = EPD()
-        # TODO: Bring a display mode from config. 0 is for full refresh, 1 is for partial refresh.
-        self._display.init(0)
-        self.clear()
+        try:
+            self._display = EPD()
+            self._display.init(1)
+            self.clear()
+        except Exception as e:
+            logging.error(f"failed to initialize waveshare1in54_v2 display: {e}")
 
     def render(self, canvas):
-        buf = self._display.getbuffer(canvas)
-        self._display.display(buf)
+        try:
+            buf = self._display.getbuffer(canvas)
+            self._display.displayPart(buf)
+        except Exception as e:
+            logging.error(f"failed to render to waveshare1in54_v2 display: {e}")
 
     def clear(self):
-        self._display.Clear(0xFF)
+        try:
+            self._display.Clear(0xFF)
+        except Exception as e:
+            logging.error(f"failed to clear waveshare1in54_v2 display: {e}")
