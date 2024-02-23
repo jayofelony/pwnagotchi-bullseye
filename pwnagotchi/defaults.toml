@@ -114,7 +114,7 @@ main.no_restart = false
 
 main.filter = ""
 
-main.log.path = "/home/pi/logs/pwnagotchi.log"
+main.log.path = "/var/log/pwnagotchi.log"
 main.log.rotation.enabled = true
 main.log.rotation.size = "10M"
 
@@ -214,7 +214,7 @@ bettercap.silence = [
 
 fs.memory.enabled = true
 fs.memory.mounts.log.enabled = true
-fs.memory.mounts.log.mount = "/home/pi/logs"
+fs.memory.mounts.log.mount = "/var/log/"
 fs.memory.mounts.log.size = "50M"
 fs.memory.mounts.log.sync = 60
 fs.memory.mounts.log.zram = true
