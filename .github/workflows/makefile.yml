@@ -26,11 +26,7 @@ jobs:
         run: ls -la ..
 
       - name: Extract version from file
-        id: get_version
-        uses: dawidd6/action-get-version@v2
-        with:
-          path: pwnagotchi/_version.py
-          key: __version__
+        run: cut -d "'" -f2 < pwnagotchi/_version.py
 
       - name: Compress .img file to an .img.xz
         run: xz -z "../../pwnagotchi-rpi-bullseye-armhf.img"
