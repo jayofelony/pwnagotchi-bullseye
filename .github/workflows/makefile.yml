@@ -17,31 +17,19 @@ jobs:
         run: sudo apt update && sudo apt install qemu-user-static qemu-utils xz-utils -y
 
       - name: Build img file
-        run: make all
-
-      - name: See files on the current dir
-        run: ls -la .
-
-      - name: See files on the previous dir
-        run: ls -la ..
+        run: ls -la .; pwd; make all
 
       - name: Extract version from file
         run: cut -d "'" -f2 < pwnagotchi/_version.py
 
       - name: Compress .img file to an .img.xz
-        run: xz -z "../../pwnagotchi-rpi-bullseye-armhf.img"
-
-      - name: See files on the current dir
-        run: ls -la .
-
-      - name: See files on the previous dir
-        run: ls -la ..
+        run: ls -la .; pwd; xz -z "pwnagotchi-rpi-bullseye-armhf.img"
 
       - name: Create Release
         id: create_release
         uses: ncipollo/release-action@v1.14.0
         with:
-          artifacts: "../../pwnagotchi-rpi-bullseye-armhf.img.xz"
+          artifacts: "pwnagotchi-rpi-bullseye-armhf.img.xz"
           token: ${{ secrets.TOKEN }}
           draft: false
           prerelease: false
@@ -54,6 +42,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ../../pwnagotchi-rpi-bullseye-armhf.img.xz
+          asset_path: pwnagotchi-rpi-bullseye-armhf.img.xz
           asset_name: pwnagotchi-rpi-bullseye-${{ steps.get_version.outputs.version }}-armhf.img.xz
           asset_content_type: application/octet-stream
