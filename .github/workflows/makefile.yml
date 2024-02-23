@@ -2,20 +2,62 @@ name: Makefile CI
 
 on:
   push:
-    branches: [ "dev" ]
+    branches: ["dev"]
   pull_request:
-    branches: [ "dev" ]
+    branches: ["dev"]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Install dependencies
-      run: sudo apt install qemu-user-static qemu-utils
+      - name: Install qemu dependencies
+        run: sudo apt update && sudo apt install qemu-user-static qemu-utils xz-utils -y
 
-    - name: Install dependencies and create image
-      run: make
+      - name: Build img file
+        run: make all
+
+      - name: See files on the current dir
+        run: ls -la .
+
+      - name: See files on the previous dir
+        run: ls -la ..
+
+      - name: Extract version from file
+        id: get_version
+        uses: dawidd6/action-get-version@v2
+        with:
+          path: pwnagotchi/_version.py
+          key: __version__
+
+      - name: Compress .img file to an .img.xz
+        run: xz -z "../../pwnagotchi-rpi-bullseye-armhf.img"
+
+      - name: See files on the current dir
+        run: ls -la .
+
+      - name: See files on the previous dir
+        run: ls -la ..
+
+      - name: Create Release
+        id: create_release
+        uses: ncipollo/release-action@v1.14.0
+        with:
+          artifacts: "../../pwnagotchi-rpi-bullseye-armhf.img.xz"
+          token: ${{ secrets.TOKEN }}
+          draft: false
+          prerelease: false
+          tag: ${{ steps.get_version.outputs.version }}
+          name: Release ${{ steps.get_version.outputs.version }}
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ../../pwnagotchi-rpi-bullseye-armhf.img.xz
+          asset_name: pwnagotchi-rpi-bullseye-${{ steps.get_version.outputs.version }}-armhf.img.xz
+          asset_content_type: application/octet-stream
