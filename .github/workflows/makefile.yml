@@ -22,7 +22,7 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Print version
-        run: echo "Version: ${{ env.VERSION }}"
+        run: echo "$GITHUB_CONTEXT"; echo "$VERSION"
 
       - name: Install qemu dependencies
         run: sudo apt update && sudo apt install qemu-user-static qemu-utils xz-utils -y
