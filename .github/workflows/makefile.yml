@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: ["dev"]
   tags:
-      - '*'
+    - "*"
 
 jobs:
   build:
@@ -15,14 +15,20 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Extract version from file
+        id: get_version
+        run: |
+          VERSION=$(cut -d "'" -f2 < pwnagotchi/_version.py)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Print version
+        run: echo "Version: ${{ env.VERSION }}"
+
       - name: Install qemu dependencies
         run: sudo apt update && sudo apt install qemu-user-static qemu-utils xz-utils -y
 
       - name: Build img file
         run: ls -la .; pwd; make all
-
-      - name: Extract version from file
-        run: cut -d "'" -f2 < pwnagotchi/_version.py
 
       - name: Transfer .img to docker and give permissions
         run: sudo chown runner:docker "pwnagotchi-rpi-bullseye-armhf.img"
@@ -38,8 +44,8 @@ jobs:
           token: ${{ secrets.TOKEN }}
           draft: false
           prerelease: false
-          tag: ${{ steps.get_version.outputs.version }}
-          name: Release ${{ steps.get_version.outputs.version }}
+          tag: ${{ env.VERSION }}
+          name: Release ${{ env.VERSION }}
 
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
@@ -48,5 +54,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: pwnagotchi-rpi-bullseye-armhf.img.xz
-          asset_name: pwnagotchi-rpi-bullseye-${{ steps.get_version.outputs.version }}-armhf.img.xz
+          asset_name: pwnagotchi-rpi-bullseye-${{ env.VERSION }}-armhf.img.xz
           asset_content_type: application/octet-stream
