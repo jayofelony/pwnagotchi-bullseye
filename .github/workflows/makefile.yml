@@ -1,14 +1,10 @@
 name: Makefile CI
 
 on:
-  push:
-    branches: ["dev"]
-    tags:
-    - '*'
   pull_request:
     tags:
     - '*'
-    branches: ["dev"]
+    branches: ["master"]
 
 jobs:
   build:
@@ -23,11 +19,20 @@ jobs:
           VERSION=$(cut -d "'" -f2 < pwnagotchi/_version.py)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
-      - name: Print version
-        run: echo '${{ env.VERSION }}'
+      - name: Get latest tag
+        uses: actions-ecosystem/action-get-latest-tag@v1
+        id: get-latest-tag
 
-      - name: Print version from bash
-        run: echo $VERSION
+      - name: Set LAST_VERSION as an environment variable
+        run: echo "LAST_VERSION=${{ steps.get-latest-tag.outputs.tag }}" >> $GITHUB_ENV
+
+      - name: Generate release notes
+        id: generate_release_notes
+        run: |
+          COMMITS=$(git log --merges --pretty=format:"* %s" $LAST_VERSION..$VERSION | sed 's/$/\\n/g')
+          CONTRIBUTORS=$(git shortlog -sn $LAST_VERSION..$VERSION | awk '{print "* @" $2}' | sed 's/$/\\n/g')
+          RELEASE_BODY="## What's Changed\n$COMMITS\n\n## New Contributors\n$CONTRIBUTORS\n\n**Full Changelog**: https://github.com/jayofelony/pwnagotchi-torch/compare/$LAST_VERSION...$VERSION"
+          echo "RELEASE_BODY=$RELEASE_BODY" >> $GITHUB_ENV
 
       - name: Install qemu dependencies
         run: sudo apt update && sudo apt install qemu-user-static qemu-utils xz-utils -y
@@ -48,6 +53,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ env.VERSION }}
-          name: Release ${{ env.VERSION }}
+          name: Pwnagotchi v${{ env.VERSION }}
           token: ${{ secrets.TOKEN }}
           files: pwnagotchi-rpi-bullseye-${{ env.VERSION }}-armhf.img.xz
+
