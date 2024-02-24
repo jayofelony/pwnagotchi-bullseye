@@ -26,6 +26,9 @@ jobs:
       - name: Print version
         run: echo '${{ env.VERSION }}'
 
+      - name: Print version from bash
+        run: echo $VERSION
+
       - name: Install qemu dependencies
         run: sudo apt update && sudo apt install qemu-user-static qemu-utils xz-utils -y
 
@@ -38,23 +41,13 @@ jobs:
       - name: Compress .img file to an .img.xz
         run: ls -la .; pwd; xz -z "pwnagotchi-rpi-bullseye-armhf.img"
 
-      - name: Create Release
-        id: create_release
-        uses: ncipollo/release-action@v1.14.0
-        with:
-          artifacts: "pwnagotchi-rpi-bullseye-armhf.img.xz"
-          token: ${{ secrets.TOKEN }}
-          draft: false
-          prerelease: false
-          tag: ${{ env.VERSION }}
-          name: Release ${{ env.VERSION }}
+      - name: Change name of .img.xz to add version
+        run: mv "pwnagotchi-rpi-bullseye-armhf.img.xz" "pwnagotchi-rpi-bullseye-$VERSION-armhf.img.xz"
 
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        token: ${{ secrets.TOKEN }}
+        name: Release ${{ env.VERSION }}
+        tag: ${{ env.VERSION }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: pwnagotchi-rpi-bullseye-armhf.img.xz
-          asset_name: pwnagotchi-rpi-bullseye-${{ env.VERSION }}-armhf.img.xz
-          asset_content_type: application/octet-stream
+          files: pwnagotchi-rpi-bullseye-${{ env.VERSION }}-armhf.img.xz
