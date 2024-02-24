@@ -22,6 +22,9 @@ jobs:
       - name: Extract version from file
         run: cut -d "'" -f2 < pwnagotchi/_version.py
 
+      - name: Transfer .img to docker and give permissions
+        run: sudo chown runner:docker "pwnagotchi-rpi-bullseye-armhf.img"
+
       - name: Compress .img file to an .img.xz
         run: ls -la .; pwd; xz -z "pwnagotchi-rpi-bullseye-armhf.img"
 
