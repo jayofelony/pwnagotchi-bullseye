@@ -46,8 +46,8 @@ jobs:
 
       - name: Release
         uses: softprops/action-gh-release@v1
-        token: ${{ secrets.TOKEN }}
-        name: Release ${{ env.VERSION }}
-        tag: ${{ env.VERSION }}
         with:
+          tag: ${{ env.VERSION }}
+          name: Release ${{ env.VERSION }}
+          token: ${{ secrets.TOKEN }}
           files: pwnagotchi-rpi-bullseye-${{ env.VERSION }}-armhf.img.xz
