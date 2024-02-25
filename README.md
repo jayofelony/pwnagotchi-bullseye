@@ -1,17 +1,7 @@
 # Pwnagotchi-Torch
 <a href="https://github.com/jayofelony/pwnagotchi/releases/latest"><img alt="Release" src="https://img.shields.io/github/release/jayofelony/pwnagotchi.svg"></a><br/>
-**This fork of [Pwnagotchi](https://www.pwnagotchi.ai) now works on **ALL** Raspberry Pi's that have built-in Wi-Fi.**
 
-Download latest image files [here](https://github.com/jayofelony/pwnagotchi-torch/releases/tag/v2.6.4), this is the final image I will be releasing as well as final version.
-
-I will move on to newer Raspios Bookworm and focus solely on 64bit kernel.
-
-**Use RPi imager to flash, please don't flash a new user as this will mess with logs created.**
-
-Default SSH credentials are pi/raspberry and for Orange Pi pi/orange
-
-Armhf is for 0w, arm64 is for 02w, 3 and 4.
-
+Please use this [repo](https://github.com/jayofelony/pwnagotchi) for all your images from now on.
 # Donations: 
 
 I would like to thank 
@@ -20,7 +10,6 @@ I would like to thank
 
 for donating!
 
-[Pwnagotchi-Torch](https://www.patreon.com/pwnagotchi_torch)
 
 [GH Sponsor](https://github.com/sponsors/jayofelony)
 
