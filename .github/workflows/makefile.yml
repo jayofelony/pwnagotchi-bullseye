@@ -1,10 +1,6 @@
 name: Makefile CI
 
 on:
-  push:
-    tags:
-    - '*'
-    branches: ["master"]
   pull_request:
     tags:
     - '*'
