@@ -60,4 +60,5 @@ jobs:
           name: Pwnagotchi v${{ env.VERSION }}
           token: ${{ secrets.TOKEN }}
           files: pwnagotchi-rpi-bullseye-${{ env.VERSION }}-armhf.img.xz
+          body: ${{ env.RELEASE_BODY }}
 
